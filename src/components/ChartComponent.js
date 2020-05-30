@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import Plotly from 'plotly.js-dist'
-import Spinner from 'react-bootstrap/Spinner'
+import Plotly from "plotly.js-dist";
+import Spinner from "react-bootstrap/Spinner";
 
 export class ChartComponent extends Component {
   constructor(props) {
@@ -16,13 +16,14 @@ export class ChartComponent extends Component {
       dayLow: [],
       dayClose: [],
       dayTime: [],
-      data: {}
+      data: {},
     };
   }
 
   componentDidMount() {
     /*Time for some API calls!*/
     //First, we got the 1 day one....relative to TODAYS date
+
     var day = this.state.date.getHours();
     const date = this.state.date;
     if (this.state.date.getHours() < 16) {
@@ -67,54 +68,46 @@ export class ChartComponent extends Component {
           dayLow: data.l,
           dayClose: data.c,
           dayTime: data.t,
-          date: data
+          date: data,
         })
       );
-      console.log(this.state.data)
-      
+    console.log(this.state.data);
   }
 
   getLinearPlot = () => {
-      //Simple displays linear plot, according to the parameter passed (Day, week, etc...)
+    //Simple displays linear plot, according to the parameter passed (Day, week, etc...)
 
-      var day = {
-        type: "scatter",
-        mode: "lines",
-        name: this.props.symbol + ' High',
-        x: this.state.dayTime.map(date => new Date(date * 1000)),
-        y: this.state.dateHigh,
-        line: {color: '#17BECF'}
-      };
+    const { dayTime, dayClose, dayHigh, dayLow, dayOpen } = this.state;
 
-        var data = day;
+    var trace1 = {
+      type: "scatter",
+      mode: "lines",
+      name: "AAPL High",
+      x: dayTime.map((t) => new Date(t * 1000)),
+      y: dayHigh,
+      line: { color: "#17BECF" },
+    };
 
-        // var layout = {
-        //   title: this.props.symbol + " Time Series",
-        //   xaxis: {
-        //     range: ["2016-07-01", "2016-12-31"],
-        //     type: "date",
-        //   },
-        //   yaxis: {
-        //     autorange: true,
-        //     range: [86.8700008333, 138.870004167],
-        //     type: "linear",
-        //   },
-        // };
+    var data = [trace1];
 
-        //Simple layout for now
-        var layout = {
-            title: this.props.symbol + ' Time Series',
-          };
-        
-        Plotly.newPlot("timePlot", data, layout);
-    }
+    var layout = {
+      title: "Apple - AAPL",
+      width: 800,
+      height: 500,
+    };
+
+    Plotly.newPlot("timePlot", data, layout);
+  };
 
   render() {
     return (
-      <div>
+      <div class="graph">
         <div id="timePlot"></div>
-        {!document.getElementById("timePlot")? <Spinner animation="border" /> : this.getLinearPlot()}
-       
+        {!document.getElementById("timePlot") ? (
+          <Spinner animation="border" />
+        ) : (
+          this.getLinearPlot()
+        )}
       </div>
     );
   }
