@@ -17,21 +17,41 @@ export class ChartComponent extends Component {
       dayClose: [],
       dayTime: [],
       data: {},
+      fiveOpen: [], //Five day chart data...
+      fiveHigh: [],
+      fiveLow: [],
+      fiveClose: [],
+      fiveTime: [],
+      monOpen: [], //One month chart data...
+      monHigh: [],
+      monLow: [],
+      monClose: [],
+      monTime: [],
+      ytdOpen: [], //Year to date chart data...
+      ytdHigh: [],
+      ytdLow: [],
+      ytdClose: [],
+      ytdTime: [],
+      ytdOpen: [], //Year chart data...
+      yrHigh: [],
+      yrLow: [],
+      yrClose: [],
+      yrTime: [],
+      linearPlot: true,
     };
   }
 
   componentDidMount() {
     /*Time for some API calls!*/
     //First, we got the 1 day one....relative to TODAYS date
-
-    var day = this.state.date.getHours();
+    var day = this.state.date.getDate();
     const date = this.state.date;
-    if (this.state.date.getHours() < 16) {
+     if (/*this.state.date.getHours() < 16*/true) {
       //Do yesterdays. Done have real-time date yet teehee
       day -= 1;
     }
-    const start =
-      new Date(
+    var start =
+      Math.trunc(new Date(
         date.getFullYear(),
         date.getMonth(),
         day,
@@ -39,9 +59,9 @@ export class ChartComponent extends Component {
         30,
         date.getSeconds(),
         date.getMilliseconds()
-      ).getTime() / 1000;
-    const end =
-      new Date(
+      ).getTime() / 1000);
+    var end =
+      Math.trunc(new Date(
         date.getFullYear(),
         date.getMonth(),
         day,
@@ -49,7 +69,7 @@ export class ChartComponent extends Component {
         0,
         date.getSeconds(),
         date.getMilliseconds()
-      ).getTime() / 1000;
+      ).getTime() / 1000);
     //Now, well do an API call for ONE DAY.
     fetch(
       "https://finnhub.io/api/v1/stock/candle?symbol=" +
@@ -71,43 +91,290 @@ export class ChartComponent extends Component {
           date: data,
         })
       );
-    console.log(this.state.data);
+      //Now, we need data for 5 DAYS. Past 5 days, eventually well exclude weekends...
+      start =
+      Math.trunc(new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        day-5,
+        9,
+        30,
+        date.getSeconds(),
+        date.getMilliseconds()
+      ).getTime() / 1000);
+      end =
+      Math.trunc(new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        day,
+        16,
+        0,
+        date.getSeconds(),
+        date.getMilliseconds()
+      ).getTime() / 1000);
+
+      console.log(start, end)
+    fetch(
+      "https://finnhub.io/api/v1/stock/candle?symbol=" +
+        this.props.symbol +
+        "&resolution=30&from=" +
+        start +
+        "&to=" +
+        end +
+        "&token=br7h0r7rh5ran4akjjk0"
+    )
+      .then((res) => res.json())
+      .then((data) =>
+        this.setState({
+          fiveOpen: data.o,
+          fiveHigh: data.h,
+          fiveLow: data.l,
+          fiveClose: data.c,
+          fiveTime: data.t,
+        })
+      );
+
+      //Now, we need data for ONE MONTH. Past month, eventually well exclude weekends...
+      start =
+      Math.trunc(new Date(
+        date.getFullYear(),
+        date.getMonth()-1,
+        day,
+        9,
+        30,
+        date.getSeconds(),
+        date.getMilliseconds()
+      ).getTime() / 1000);
+      end =
+      Math.trunc(new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        day,
+        16,
+        0,
+        date.getSeconds(),
+        date.getMilliseconds()
+      ).getTime() / 1000);
+
+      console.log(start, end)
+    fetch(
+      "https://finnhub.io/api/v1/stock/candle?symbol=" +
+        this.props.symbol +
+        "&resolution=60&from=" +
+        start +
+        "&to=" +
+        end +
+        "&token=br7h0r7rh5ran4akjjk0"
+    )
+      .then((res) => res.json())
+      .then((data) =>
+        this.setState({
+          monOpen: data.o,
+          monHigh: data.h,
+          monLow: data.l,
+          monClose: data.c,
+          monTime: data.t,
+        })
+      );
+      //Now, we need data for YEAR TO DATE. Past yr, eventually well exclude weekends...
+      start =
+      Math.trunc(new Date(
+        date.getFullYear(),
+       0,
+        1,
+        9,
+        30,
+        0,
+        0
+      ).getTime() / 1000);
+      end =
+      Math.trunc(new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        day,
+        16,
+        0,
+        date.getSeconds(),
+        date.getMilliseconds()
+      ).getTime() / 1000);
+
+    fetch(
+      "https://finnhub.io/api/v1/stock/candle?symbol=" +
+        this.props.symbol +
+        "&resolution=D&from=" +
+        start +
+        "&to=" +
+        end +
+        "&token=br7h0r7rh5ran4akjjk0"
+    )
+      .then((res) => res.json())
+      .then((data) =>
+        this.setState({
+          ytdOpen: data.o,
+          ytdHigh: data.h,
+          ytdLow: data.l,
+          ytdClose: data.c,
+          ytdTime: data.t,
+        })
+      );
+
+      //Now, we need data for 1 YEAR. Past yr, eventually well exclude weekends...
+      start =
+      Math.trunc(new Date(
+        date.getFullYear()-1,
+        date.getMonth(),
+        day,
+        16,
+        0,
+        date.getSeconds(),
+        date.getMilliseconds()
+      ).getTime() / 1000);
+      end =
+      Math.trunc(new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        day,
+        16,
+        0,
+        date.getSeconds(),
+        date.getMilliseconds()
+      ).getTime() / 1000);
+
+      fetch(
+        "https://finnhub.io/api/v1/stock/candle?symbol=" +
+          this.props.symbol +
+          "&resolution=D&from=" +
+          start +
+          "&to=" +
+          end +
+          "&token=br7h0r7rh5ran4akjjk0"
+      )
+        .then((res) => res.json())
+        .then((data) =>
+          this.setState({
+            yrOpen: data.o,
+            yrHigh: data.h,
+            yrLow: data.l,
+            yrClose: data.c,
+            yrTime: data.t,
+          })
+        );
+        
   }
 
   getLinearPlot = () => {
     //Simple displays linear plot, according to the parameter passed (Day, week, etc...)
 
-    const { dayTime, dayClose, dayHigh, dayLow, dayOpen } = this.state;
+    const { dayTime, dayHigh, fiveTime, fiveHigh, monTime, monHigh, ytdTime, ytdHigh, yrHigh, yrTime } = this.state;
+    var data = [
+      {
+        type: "scatter",
+        mode: "lines",
+        name: "AAPL High",
+        x: dayTime  ? dayTime.map((t) => new Date(t * 1000)): [],
+        y: dayHigh ? dayHigh: [],
+        line: { color: "#7B68EE" },
+      },
+      {
+        type: "scatter",
+        mode: "lines",
+        name: "AAPL High",
+        x: fiveTime ? fiveTime.map((t) => new Date(t * 1000)): [],
+        y: fiveHigh? fiveHigh: [],
+        line: { color: "#7B68EE" },
+      },
+      {
+        type: "scatter",
+        mode: "lines",
+        name: "AAPL High",
+        x: monTime ? monTime.map((t) => new Date(t * 1000)): [],
+        y: monHigh? monHigh: [],
+        line: { color: "#7B68EE" },
+      },
+      {
+        type: "scatter",
+        mode: "lines",
+        name: "AAPL High",
+        x: ytdTime ? ytdTime.map((t) => new Date(t * 1000)): [],
+        y: ytdHigh? ytdHigh: [],
+        line: { color: "#7B68EE" },
+      },
+      {
+        type: "scatter",
+        mode: "lines",
+        name: "AAPL High",
+        x: yrTime ? yrTime.map((t) => new Date(t * 1000)): [],
+        y: yrHigh? yrHigh: [],
+        line: { color: "#7B68EE" },
+      },
+    ];
 
-    var trace1 = {
-      type: "scatter",
-      mode: "lines",
-      name: "AAPL High",
-      x: dayTime.map((t) => new Date(t * 1000)),
-      y: dayHigh,
-      line: { color: "#17BECF" },
-    };
-
-    var data = [trace1];
+    var updatemenus=[
+      {
+          buttons: [
+              {
+                  args: [{'visible': [true, false, false, false, false]}],
+                  label: '1D',
+                  method: 'update'
+              },
+              {
+                  args: [{'visible': [false, true, false, false, false]}
+                         ],
+                  label: '5D',
+                  method: 'update'
+              },
+              {
+                args: [{'visible': [false, false, true, false, false]}
+                       ],
+                label: '1M',
+                method: 'update'
+            },
+            {
+              args: [{'visible': [false, false, false, true, false]}
+                     ],
+              label: 'YTD',
+              method: 'update'
+          },
+          {
+            args: [{'visible': [false, false, false, false, true]}
+                   ],
+            label: '1Y',
+            method: 'update'
+        },
+          ],
+          direction: 'left',
+          showactive: true,
+          type: 'buttons',
+          x: 0.0,
+          xanchor: 'left',
+          y: 1.1,
+          yanchor: 'top'
+      },
+  
+  ]
 
     var layout = {
       title: "Apple - AAPL",
-      width: 800,
+      updatemenus: updatemenus,
+      width: 900,
       height: 500,
     };
 
-    Plotly.newPlot("timePlot", data, layout);
+    Plotly.newPlot("timePlot", this.state.linearPlot? data: null, layout);
   };
 
   render() {
     return (
-      <div class="graph">
-        <div id="timePlot"></div>
+      <div className="graph">
+        <div id="timePlot">
+          
+        </div>
         {!document.getElementById("timePlot") ? (
-          <Spinner animation="border" />
+          <Spinner />
         ) : (
           this.getLinearPlot()
         )}
+        
       </div>
     );
   }
