@@ -8,7 +8,7 @@ function App() {
     <div className="App">
       <div>
         <ChartComponent symbol={'AAPL'}/>
-        <InfoComponent />
+        <InfoComponent symbol={'AAPL'}/>
       </div>
     </div>
   );

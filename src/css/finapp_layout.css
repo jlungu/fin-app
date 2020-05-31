@@ -33,11 +33,28 @@
 }
 .lcell{
     text-align: left;
+    font-size: 18px;
+    width: 180px;
 }
 .rcell{
-    text-align: left;
+    text-align: right;
+    font-size: 18px;
+    width: 130px;
 }
-.left-col{
-    margin-left: 22%;
-    margin-right: -22%;
+
+#currentPrice{
+    font-size: 40px;
+    font-weight: bold;
+    display: block;
+    text-align: center;
 }
+#priceDiv{
+    display:inline-block;
+    margin-top: 5%;
+}
+#priceChange{
+    display: block;
+    text-align: center;
+    font-size: 30px;
+}   
+
