@@ -46,15 +46,11 @@ export class ChartComponent extends Component {
     //First, we got the 1 day one....relative to TODAYS date
     var day = this.state.date.getDate();
     const date = this.state.date;
-     if (/*this.state.date.getHours() < 16*/true) {
-      //Do yesterdays. Done have real-time date yet teehee
-      day -= 1;
-    }
     var start =
       Math.trunc(new Date(
         date.getFullYear(),
         date.getMonth(),
-        day,
+        date.getDate(),
         9,
         30,
         date.getSeconds(),
@@ -64,12 +60,14 @@ export class ChartComponent extends Component {
       Math.trunc(new Date(
         date.getFullYear(),
         date.getMonth(),
-        day,
-        16,
+        date.getDate(),
+        12,
         0,
         date.getSeconds(),
         date.getMilliseconds()
       ).getTime() / 1000);
+      
+      console.log(start, end)
     //Now, well do an API call for ONE DAY.
     fetch(
       "https://finnhub.io/api/v1/stock/candle?symbol=" +
@@ -78,7 +76,7 @@ export class ChartComponent extends Component {
         start +
         "&to=" +
         end +
-        "&token=br7h0r7rh5ran4akjjk0"
+        "&token=brain17rh5rbgnjpuck0"
     )
       .then((res) => res.json())
       .then((data) =>
@@ -112,8 +110,6 @@ export class ChartComponent extends Component {
         date.getSeconds(),
         date.getMilliseconds()
       ).getTime() / 1000);
-
-      console.log(start, end)
     fetch(
       "https://finnhub.io/api/v1/stock/candle?symbol=" +
         this.props.symbol +
@@ -121,7 +117,7 @@ export class ChartComponent extends Component {
         start +
         "&to=" +
         end +
-        "&token=br7h0r7rh5ran4akjjk0"
+        "&token=brain17rh5rbgnjpuck0"
     )
       .then((res) => res.json())
       .then((data) =>
@@ -155,8 +151,6 @@ export class ChartComponent extends Component {
         date.getSeconds(),
         date.getMilliseconds()
       ).getTime() / 1000);
-
-      console.log(start, end)
     fetch(
       "https://finnhub.io/api/v1/stock/candle?symbol=" +
         this.props.symbol +
@@ -164,7 +158,7 @@ export class ChartComponent extends Component {
         start +
         "&to=" +
         end +
-        "&token=br7h0r7rh5ran4akjjk0"
+        "&token=brain17rh5rbgnjpuck0"
     )
       .then((res) => res.json())
       .then((data) =>
@@ -205,7 +199,7 @@ export class ChartComponent extends Component {
         start +
         "&to=" +
         end +
-        "&token=br7h0r7rh5ran4akjjk0"
+        "&token=brain17rh5rbgnjpuck0"
     )
       .then((res) => res.json())
       .then((data) =>
@@ -247,7 +241,7 @@ export class ChartComponent extends Component {
           start +
           "&to=" +
           end +
-          "&token=br7h0r7rh5ran4akjjk0"
+          "&token=brain17rh5rbgnjpuck0"
       )
         .then((res) => res.json())
         .then((data) =>
