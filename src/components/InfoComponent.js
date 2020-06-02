@@ -8,10 +8,16 @@ export class ChartComponent extends Component {
       prevClose: -1,
       red: false, //Red means a decline from previous close, false red means its green i.e. an inc
       marketCap: -1,
-      shareOut: -1,
       time: -1,
       subscribed: false,
-      peRatio: 'N/A'
+      peRatio: "N/A",
+      volume: 0,
+      eps: -1,
+      bookVal: -1,
+      beta: -1,
+      exDivDate: "N/A",
+      divAmt: "N/A",
+      open: -1
     };
   }
   componentDidMount() {
@@ -27,40 +33,78 @@ export class ChartComponent extends Component {
           price: data.c,
           prevClose: data.pc,
           time: data.t,
+          open: data.o
         })
       );
 
     //NEED: Market capitalization, shares outstanding.
     fetch(
-      "https://finnhub.io/api/v1/stock/profile2?symbol=" +
+      "https://finnhub.io/api/v1/stock/metric?symbol=" +
         this.props.symbol +
-        "&token=brain17rh5rbgnjpuck0"
+        "&metric=price&token=brain17rh5rbgnjpuck0"
     )
       .then((res) => res.json())
       .then((data) =>
         this.setState({
-          marketCap: data.marketCapitalization,
-          shareOut: data.shareOutstanding,
+          marketCap: data.metric.marketCapitalization,
+          beta: data.metric.beta.toFixed(2),
         })
       );
 
-    //Candestick data for TODAY only. Just need it to grab volume for previous day (if before 4pm EST)
-    var d = new Date();
-    const sDate =
-      d.getHours() < 20
-        ? new Date(d.getFullYear(), d.getMonth() + 1, d.getDay(), 20)
-        : new Date(d.getFullYear(), d.getMonth() + 1, d.getDay(), 20);
-    console.log(sDate.toDateString());
-
-
-    //API call for PE RATIO.
-    fetch('https://finnhub.io/api/v1/stock/metric?symbol=' + this.props.symbol + '&metric=valuation&token=brain17rh5rbgnjpuck0')
+    //QUOTE. Grabbing latest volume from IEXCLOUD API
+    fetch('https://sandbox.iexapis.com/stable/stock/'+this.props.symbol+'/quote?token=Tsk_50d3a3ecf17047948593b4a3d34a80c6')
     .then(res => res.json())
     .then(data => this.setState({
-      peRatio: data.metric.peExclExtraTTM?(data.metric.peExclExtraTTM).toFixed(2): 'N/A'
+      volume: data.latestVolume == null? data.previousVolume: data.latestVolume
     }))
+    
 
-    console.log(this.state.peRatio)
+    //API call for PE RATIO.
+    fetch(
+      "https://finnhub.io/api/v1/stock/metric?symbol=" +
+        this.props.symbol +
+        "&metric=valuation&token=brain17rh5rbgnjpuck0"
+    )
+      .then((res) => res.json())
+      .then((data) =>
+        this.setState({
+          peRatio: data.metric.peExclExtraTTM
+            ? data.metric.peExclExtraTTM.toFixed(2)
+            : "N/A",
+        })
+      );
+
+    //API call for PE RATIO.
+    fetch(
+      "https://finnhub.io/api/v1/stock/metric?symbol=" +
+        this.props.symbol +
+        "&metric=perShare&token=brain17rh5rbgnjpuck0"
+    )
+      .then((res) => res.json())
+      .then((data) =>
+        this.setState({
+          eps: data.metric.epsInclExtraItemsTTM
+            ? data.metric.epsInclExtraItemsTTM.toFixed(2)
+            : "N/A",
+          bookVal: data.metric.bookValuePerShareQuarterly
+            ? data.metric.bookValuePerShareQuarterly.toFixed(2)
+            : "N/A",
+        })
+      );
+
+    //API call for DIVIDENDS (Using IEX cloud, Finnhub made them premium accces only and i is broke :/)
+    fetch(
+      "https://sandbox.iexapis.com/stable/time-series/advanced_dividends/" +
+        this.props.symbol +
+        "?last=4&token=Tsk_50d3a3ecf17047948593b4a3d34a80c6"
+    )
+      .then((res) => res.json())
+      .then((data) =>
+        this.setState({
+          exDivDate: data[0].exDate,
+          divAmt: data[0].amount,
+        })
+      );
 
     //WEBSOCKET - Subscribe to updates on PRICING. Need to see real-time updates, WHEN ITS A TRADING DAY.
     const socket = new WebSocket(
@@ -71,15 +115,17 @@ export class ChartComponent extends Component {
     socket.addEventListener("open", function (event) {
       socket.send(JSON.stringify({ type: "subscribe", symbol: sym }));
     });
-    
+
     // Listen for messages
+    var volume = 0;
     socket.addEventListener("message", (event) => {
+      volume = this.state.volume;
       var x = JSON.parse(event.data);
-      if (x.type != "trade")
-        return
-        this.setState({
-          price: x.data[0].p,
-        });
+      if (x.type != "trade") return;
+      this.setState({
+        price: x.data[0].p,
+        volume: (volume + x.data[0].v),
+      });
     });
   }
 
@@ -92,7 +138,7 @@ export class ChartComponent extends Component {
         red: true,
       });
     } else {
-      //No dice; num should be GREEN BABY
+      //No dice; num should be GREEN BABY STOCKS ONLY GO UP
       this.setState({
         red: true,
       });
@@ -113,7 +159,19 @@ export class ChartComponent extends Component {
   };
 
   render() {
-    const { price, prevClose, marketCap, shareOut, peRatio } = this.state;
+    const {
+      price,
+      prevClose,
+      marketCap,
+      beta,
+      peRatio,
+      volume,
+      eps,
+      bookVal,
+      exDivDate,
+      divAmt,
+      open
+    } = this.state;
     const change = (price - prevClose).toFixed(2);
     var mc =
       marketCap > 999999
@@ -135,28 +193,32 @@ export class ChartComponent extends Component {
 
     return (
       <div class="container">
-        <hr className="break"></hr>
         <h3 className="h3">Quick Look</h3>
         <div class="row justify-content-md-center">
           <div class="col-lg-3 w">
             <table>
               <tbody>
                 <tr>
+                <td class="lcell">Open</td>
+                  <td class="rcell">{open}</td>
+                </tr>
+                <tr>
+                <td class="lcell">Previous Close</td>
+                  <td class="rcell">{prevClose}</td>
+                </tr>
+                <tr>
                   <td class="lcell">Market Cap</td>
                   <td class="rcell">{mc}</td>
                 </tr>
                 <tr>
                   <td class="lcell">Volume</td>
-                </tr>
-                <tr>
-                  <td class="lcell">PE Ratio</td>
-                  <td class="rcell">{peRatio}</td>
-                </tr>
-                <tr>
-                  <td class="lcell">EPS</td>
+                  <td class="rcell">
+                    {volume}
+                  </td>
                 </tr>
                 <tr>
                   <td class="lcell">Book Value</td>
+                  <td class="rcell">{bookVal}</td>
                 </tr>
               </tbody>
             </table>
@@ -176,20 +238,24 @@ export class ChartComponent extends Component {
             <table>
               <tbody>
                 <tr>
-                  <td class="lcell">Forward Dividend</td>
-                  <td class="rcell">$1.25T</td>
+                  <td class="lcell">EPS</td>
+                  <td class="rcell">{eps}</td>
                 </tr>
                 <tr>
-                  <td class="lcell">Earnings Date</td>
+                  <td class="lcell">PE Ratio</td>
+                  <td class="rcell">{peRatio}</td>
                 </tr>
                 <tr>
                   <td class="lcell">Beta</td>
+                  <td class="rcell">{beta}</td>
                 </tr>
                 <tr>
-                  <td class="lcell">ROA, ROE</td>
+                  <td class="lcell">Latest Dividend</td>
+                  <td class="rcell">{divAmt}</td>
                 </tr>
                 <tr>
-                  <td class="lcell"> PM, OM</td>
+                  <td class="lcell">Ex Dividend Date</td>
+                  <td class="rcell">{exDivDate}</td>
                 </tr>
               </tbody>
             </table>
