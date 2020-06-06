@@ -17,7 +17,8 @@ export class ChartComponent extends Component {
       beta: -1,
       exDivDate: "N/A",
       divAmt: "N/A",
-      open: -1
+      open: -1,
+      symbol: this.props.symbol.toUpperCase()
     };
   }
   componentDidMount() {
@@ -192,7 +193,7 @@ export class ChartComponent extends Component {
     var prefix = change < 0 ? "" : "+";
 
     return (
-      <div class="container">
+      <div class="container info-container">
         <h3 className="h3">Quick Look</h3>
         <div class="row justify-content-md-center">
           <div class="col-lg-3 w">

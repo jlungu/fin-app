@@ -11,6 +11,7 @@
     text-align:center;
     z-index: -1;
     margin-bottom: -2%;
+    margin-top: -1%;
 }
 #toggleLinearPlot{
     z-index: 10;
@@ -77,11 +78,27 @@
 }
 
 .stock-hdr-div{
+    margin-top: 1%;
     text-align:center;
+    position: relative;
+    z-index: 10;
 }
 #stock-header{
     display: block;
+    font-size: 40px;
+    font-weight: bold;
 }
 #stock-subheader{
     display: block;
+    font-size: 14px;
+    margin-top: -0.5%;
+}
+.info-container{
+    margin-top: 2%;
+    position: relative;
+    z-index: 10;
+}
+.company-container{
+    position: relative;
+    z-index: 10;
 }
