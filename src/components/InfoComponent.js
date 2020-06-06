@@ -232,6 +232,14 @@ export class ChartComponent extends Component {
                 {prefix}
                 {change}
               </span>
+              <span id="afterHoursHead">After Hours</span>
+              <span style={style} id="afterHrsPrice">
+                ${price.toFixed(2)}
+              </span>
+              <span id="afterHrsChng">
+                {prefix}
+                {change}
+              </span>
             </div>
           </div>
           <div class="col-lg-3 w">

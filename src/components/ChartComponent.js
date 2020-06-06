@@ -348,7 +348,6 @@ export class ChartComponent extends Component {
   ]
 
     var layout = {
-      title: "Apple - AAPL",
       updatemenus: updatemenus,
       width: 900,
       height: 500,

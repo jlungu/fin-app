@@ -1,9 +1,16 @@
+.my-nav{
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 10px;
+}
+
 #timePlot{
     display: inline-block;
 }
 .graph{
     text-align:center;
-    z-index: -1
+    z-index: -1;
+    margin-bottom: -2%;
 }
 #toggleLinearPlot{
     z-index: 10;
@@ -25,6 +32,8 @@
     width: 20%;
 }
 .h3{
+    z-index: 10;
+    position: relative;
 }
 .lcell{
     text-align: left;
@@ -45,12 +54,34 @@
 }
 #priceDiv{
     display:inline-block;
-    margin-top: 5%;
+
 }
 #priceChange{
     display: block;
     text-align: center;
-    font-size: 30px;
-    font-weight: lighter
+    font-size: 20px;
+    font-style: unset;
+    margin-top: -6%;
 }   
 
+#afterHrsPrice{
+
+}
+
+#afterHrsChng{
+
+}
+
+#afterHoursHead{
+    display: block;
+}
+
+.stock-hdr-div{
+    text-align:center;
+}
+#stock-header{
+    display: block;
+}
+#stock-subheader{
+    display: block;
+}
