@@ -10,6 +10,7 @@
     "jquery": "^3.5.1",
     "plotly.js-dist": "^1.54.1",
     "react": "^16.13.1",
+    "react-autosuggest": "^10.0.2",
     "react-bootstrap": "^1.0.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",

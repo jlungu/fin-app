@@ -1,4 +1,5 @@
-import React from "react";
+import React, { Component } from "react";
+import ReactDOM from 'react-dom'
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
 
 import "./App.css";
@@ -10,21 +11,24 @@ import StockHeader from "./components/StockHeader";
 import HomeComponent from "./components/HomeComponent";
 import OverviewPageComponent from "./components/OverviewPageComponent";
 
-function App() {
-  return (
-    <Router>
-      <div className="App">
-        <Navbar />
-        <div>
-          <Switch>
-            <Route exact path="/" render={() => <Redirect to={{pathname: "/home"}} />} />
-            <Route path="/home" component={HomeComponent}></Route>
-            <Route path="/stock/:symbol" component={OverviewPageComponent}></Route>
-          </Switch>
+class App extends Component {
+  render(){
+    return (
+      <Router>
+        <div className="App">
+          <Navbar />
+          <div>
+            <Switch>
+              <Route exact path="/" render={() => <Redirect to={{pathname: "/home"}} />} />
+              <Route path="/home" component={HomeComponent}></Route>
+              <Route path="/stock/:symbol" component={OverviewPageComponent}></Route>
+            </Switch>
+          </div>
         </div>
-      </div>
-    </Router>
-  );
+      </Router>
+    );
+  }
 }
+export default App; 
 
-export default App;
+ReactDOM.render(<App />, document.getElementById('root'));
