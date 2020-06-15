@@ -37,7 +37,8 @@ export class ChartComponent extends Component {
       yrLow: [],
       yrClose: [],
       yrTime: [],
-      linearPlot: true,
+      plot: true,
+      linearPlot: true
     };
   }
 
@@ -259,49 +260,138 @@ export class ChartComponent extends Component {
   getLinearPlot = () => {
     //Simple displays linear plot, according to the parameter passed (Day, week, etc...)
 
+    //Linear data
     const { dayTime, dayHigh, fiveTime, fiveHigh, monTime, monHigh, ytdTime, ytdHigh, yrHigh, yrTime } = this.state;
-    var data = [
+    //CandlestickData
+    const {dayClose, dayLow, dayOpen, fiveClose, fiveLow, fiveOpen, monClose, monLow, monOpen, ytdClose,
+       ytdLow, ytdOpen, yrClose, yrLow, yrOpen} = this.state;
+    var dayColor = dayHigh? (dayHigh[0] <= dayHigh[dayHigh.length -1] ? 'green': 'red'): 'black'
+    var fiveColor = fiveHigh? (fiveHigh[0] <= fiveHigh[fiveHigh.length -1] ? 'green': 'red'): 'black'
+    var monColor = monHigh? (monHigh[0] <= monHigh[monHigh.length -1] ? 'green': 'red'): 'black'
+    var ytdColor = ytdHigh? (ytdHigh[0] <= ytdHigh[ytdHigh.length -1] ? 'green': 'red'): 'black'
+    var yrColor = yrHigh ? (yrHigh[0] <= yrHigh[yrHigh.length -1] ? 'green': 'red'): 'black'
+
+    var linearData = [
       {
         type: "scatter",
         mode: "lines",
-        name: "AAPL High",
+        name:  this.props.symbol + "High",
         x: dayTime  ? dayTime.map((t) => new Date(t * 1000)): [],
         y: dayHigh ? dayHigh: [],
-        line: { color: "#7B68EE" },
+        line: { color: dayColor},
       },
       {
         type: "scatter",
         mode: "lines",
-        name: "AAPL High",
+        name: this.props.symbol +" High",
         x: fiveTime ? fiveTime.map((t) => new Date(t * 1000)): [],
         y: fiveHigh? fiveHigh: [],
-        line: { color: "#7B68EE" },
+        line: { color: fiveColor },
       },
       {
         type: "scatter",
         mode: "lines",
-        name: "AAPL High",
+        name: this.props.symbol +" High",
         x: monTime ? monTime.map((t) => new Date(t * 1000)): [],
         y: monHigh? monHigh: [],
-        line: { color: "#7B68EE" },
+        line: { color: monColor },
       },
       {
         type: "scatter",
         mode: "lines",
-        name: "AAPL High",
+        name: this.props.symbol +" High",
         x: ytdTime ? ytdTime.map((t) => new Date(t * 1000)): [],
         y: ytdHigh? ytdHigh: [],
-        line: { color: "#7B68EE" },
+        line: { color: ytdColor },
       },
       {
         type: "scatter",
         mode: "lines",
-        name: "AAPL High",
+        name: this.props.symbol +" High",
         x: yrTime ? yrTime.map((t) => new Date(t * 1000)): [],
         y: yrHigh? yrHigh: [],
-        line: { color: "#7B68EE" },
+        line: { color: yrColor },
       },
     ];
+
+    var candlestickData = [
+      {
+        x: dayTime  ? dayTime.map((t) => new Date(t * 1000)): [],
+        close: dayClose ? dayClose: [],
+        high: dayHigh ? dayHigh: [],
+        low: dayLow ? dayLow: [],
+        open: dayOpen ? dayOpen: [],
+      
+        // cutomise colors
+        increasing: {line: {color: 'green'}},
+        decreasing: {line: {color: 'red'}},
+      
+        type: 'candlestick', 
+        xaxis: 'x',
+        yaxis: 'y'
+      },
+      {
+        x: fiveTime  ? fiveTime.map((t) => new Date(t * 1000)): [],
+        close: fiveClose ? fiveClose: [],
+        high: fiveHigh ? fiveHigh: [],
+        low: fiveLow ? fiveLow: [],
+        open: fiveOpen ? fiveOpen: [],
+      
+        // cutomise colors
+        increasing: {line: {color: 'green'}},
+        decreasing: {line: {color: 'red'}},
+      
+        type: 'candlestick', 
+        xaxis: 'x',
+        yaxis: 'y'
+      },
+      {
+        x: monTime  ? monTime.map((t) => new Date(t * 1000)): [],
+        close: monClose ? monClose: [],
+        high: monHigh ? monHigh: [],
+        low: monLow ? monLow: [],
+        open: monOpen ? monOpen: [],
+      
+        // cutomise colors
+        increasing: {line: {color: 'green'}},
+        decreasing: {line: {color: 'red'}},
+      
+        type: 'candlestick', 
+        xaxis: 'x',
+        yaxis: 'y'
+      },
+      {
+        x: ytdTime  ? ytdTime.map((t) => new Date(t * 1000)): [],
+        close: ytdClose ? ytdClose: [],
+        high: ytdHigh ? ytdHigh: [],
+        low: ytdLow ? ytdLow: [],
+        open: ytdOpen ? ytdOpen: [],
+      
+        // cutomise colors
+        increasing: {line: {color: 'green'}},
+        decreasing: {line: {color: 'red'}},
+      
+        type: 'candlestick', 
+        xaxis: 'x',
+        yaxis: 'y'
+      },
+      {
+        x: yrTime  ? yrTime.map((t) => new Date(t * 1000)): [],
+        close: yrClose ? yrClose: [],
+        high: yrHigh ? yrHigh: [],
+        low: yrLow ? yrLow: [],
+        open: yrOpen ? yrOpen: [],
+      
+        // cutomise colors
+        increasing: {line: {color: 'green'}},
+        decreasing: {line: {color: 'red'}},
+      
+        type: 'candlestick', 
+        xaxis: 'x',
+        yaxis: 'y'
+      },
+    ]
+
 
     var updatemenus=[
       {
@@ -353,12 +443,29 @@ export class ChartComponent extends Component {
       height: 500,
     };
 
-    Plotly.newPlot("timePlot", this.state.linearPlot? data: null, layout);
+    Plotly.newPlot("timePlot", this.state.plot? this.state.linearPlot? linearData: candlestickData: null, layout);
   };
+
+  swapPlotType = (type) => {
+    if (type == "line")
+      this.setState({
+        linearPlot: true
+      })
+    else if (type == "candle"){
+      this.setState({
+        linearPlot: false
+      })
+    }
+  }
 
   render() {
     return (
       <div className="graph">
+        <div id="chart-buttons">
+          <button type="button" id="swap-data-but" onClick={this.swapPlotType.bind(this, "line")}class="btn btn-light btn-sm"><span class="material-icons">show_chart</span></button>
+          <button type="button" id="swap-data-but" onClick={this.swapPlotType.bind(this, "candle")}class="btn btn-light btn-sm"><span class="material-icons">bar_chart</span></button>
+        </div>
+        
         <div id="timePlot">
           
         </div>
@@ -367,7 +474,6 @@ export class ChartComponent extends Component {
         ) : (
           this.getLinearPlot()
         )}
-        
       </div>
     );
   }

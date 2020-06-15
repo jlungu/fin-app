@@ -100,11 +100,13 @@ export class ChartComponent extends Component {
         "?last=4&token=Tsk_50d3a3ecf17047948593b4a3d34a80c6"
     )
       .then((res) => res.json())
-      .then((data) =>
+      .then((data) =>{
+        console.log(data)
         this.setState({
-          exDivDate: data[0].exDate,
-          divAmt: data[0].amount,
+          exDivDate: data.length != 0? data[0].exDate: 'N/A',
+          divAmt: data.length != 0? data[0].amount: 'N/A',
         })
+      }
       );
 
     //WEBSOCKET - Subscribe to updates on PRICING. Need to see real-time updates, WHEN ITS A TRADING DAY.
