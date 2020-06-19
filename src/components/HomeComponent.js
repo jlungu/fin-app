@@ -37,7 +37,8 @@ export class HomeComponent extends Component {
   }
 
   //Triggered when the input bar is focused, time to show all thew stonks.
-  focusInput = () => {
+  focusInput = (e) => {
+    e.preventDefault();
     this.setState({
       searchFocused: true
     })
@@ -63,12 +64,49 @@ export class HomeComponent extends Component {
   }
 
   render() {
+    const title = "<Finance App />"
+    const style = {
+      color: 'green'
+    }
     return (
       <div class="home-div">
+        <div class="row justify-content-md-center">
+            <div class="col-sm-4">
+              <div id="sandp" class="card border border-success front_card">
+                  <div style={style} class="card-body index_card_body">
+                    <span class="index_name">S&P 500 |</span>
+                    <span  class="index_price">3,097.74 </span>
+                    <span class="index_change">| -17.60</span>
+                  </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div id="dowj" class="card front_card">
+                  <div class="card-body index_card_body">
+                    <span class="index_name">DOW J |</span>
+                    <span class="index_price">25,871.46 </span>
+                    <span class="index_change">| -208.64</span>
+                  </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div id="nasdaq" class="card front_card">
+                  <div class="card-body index_card_body">
+                    <span class="index_name">NASDAQ |</span>
+                    <span class="index_price">9.946.12 </span>
+                    <span class="index_change">| +3.07</span>
+                  </div>
+              </div>
+            </div>
+          </div>
+        
+        <h1 id="page_header">{title}</h1>
+        <h5 id="sub-header">A simple stock look-up tool</h5>
         <div class="input-group input-group-lg main-search">
           <form id="main-form" class="form-inline" onSubmit={this.search}>
             <div class="row">
             <input
+              autoComplete="off"
               id="main-searchbar"
               type="text"
               class="form-control"

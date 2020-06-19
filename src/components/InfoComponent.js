@@ -48,7 +48,7 @@ export class ChartComponent extends Component {
       .then((data) =>
         this.setState({
           marketCap: data.metric.marketCapitalization,
-          beta: data.metric.beta.toFixed(2),
+          beta: data.metric.beta? data.metric.beta.toFixed(2): 'N/A',
         })
       );
 
@@ -216,7 +216,7 @@ export class ChartComponent extends Component {
                 <tr>
                   <td class="lcell">Volume</td>
                   <td class="rcell">
-                    {volume}
+                    {volume.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                   </td>
                 </tr>
                 <tr>

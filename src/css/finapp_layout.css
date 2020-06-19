@@ -124,7 +124,7 @@
     margin-top: 4.5%;
 }
 #main-form{
-    margin-top: 20%;
+    margin-top: 8%;
 
 }
 #main-searchbar{
@@ -161,4 +161,89 @@
 .stock-option{
     font-size: 20px;
     color: gray;
+}
+
+.sec_card{
+    height: 50px;
+    width: 200px;
+    margin-top: 3%;
+    display: inline-block;
+    transition:all 0.3s ease;
+}
+.sec_card:hover{
+    background-color: rgb(236, 235, 235);
+    transition:all 0.3s ease;
+}
+.sec_card_body{
+    margin-top: -8%;
+}
+.sec_card_body_txt{
+    display: block;
+    margin-bottom: -5%;
+}
+.sec_column{
+    text-align: center;
+}
+.sec_card_body_txt_sec{
+    font-size: 10px;
+}
+.sec_left{
+    text-align: left;
+    vertical-align: middle;
+}
+.sec_right{
+    text-align: right;
+    margin-top: -27%;
+    vertical-align: middle;
+}
+#sec_logo{
+    font-weight: bold;
+    font-size: 30px;
+}
+#sec_links{
+    color:inherit;
+}
+
+#page_header{
+    font-size: 80px;
+    font-weight: lighter;
+    font-family: 'Oswald', sans-serif;
+    margin-top: 7%;
+}
+#no_sec{
+    margin-top: 30%;
+    font-size: 20px;
+}
+#sub-header{
+    font-weight: 400;  
+}
+.front_card{
+    display: inline-block;
+    margin-top: 0%;
+    height: 50px;
+    width: 300px;
+    transition:all 0.3s ease;
+}
+#sandp{
+    margin-right: -75%;
+}
+#nasdaq{
+    margin-left: -75%;
+}
+.index_card_body{
+    margin: auto;
+    padding: 5px;   
+}
+.index_name{
+    vertical-align: middle;
+    font-size: 16px;
+}
+.index_price{
+    vertical-align: middle;
+    font-size: 25px;    
+    margin-left: 5px;
+}
+.index_change{
+    vertical-align: middle;
+    font-size: 18px;
 }

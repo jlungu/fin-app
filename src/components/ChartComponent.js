@@ -279,6 +279,7 @@ export class ChartComponent extends Component {
         x: dayTime  ? dayTime.map((t) => new Date(t * 1000)): [],
         y: dayHigh ? dayHigh: [],
         line: { color: dayColor},
+        visible: true,
       },
       {
         type: "scatter",
@@ -287,6 +288,7 @@ export class ChartComponent extends Component {
         x: fiveTime ? fiveTime.map((t) => new Date(t * 1000)): [],
         y: fiveHigh? fiveHigh: [],
         line: { color: fiveColor },
+        visible: false,
       },
       {
         type: "scatter",
@@ -295,6 +297,7 @@ export class ChartComponent extends Component {
         x: monTime ? monTime.map((t) => new Date(t * 1000)): [],
         y: monHigh? monHigh: [],
         line: { color: monColor },
+        visible: false,
       },
       {
         type: "scatter",
@@ -303,6 +306,7 @@ export class ChartComponent extends Component {
         x: ytdTime ? ytdTime.map((t) => new Date(t * 1000)): [],
         y: ytdHigh? ytdHigh: [],
         line: { color: ytdColor },
+        visible: false,
       },
       {
         type: "scatter",
@@ -311,6 +315,7 @@ export class ChartComponent extends Component {
         x: yrTime ? yrTime.map((t) => new Date(t * 1000)): [],
         y: yrHigh? yrHigh: [],
         line: { color: yrColor },
+        visible: false,
       },
     ];
 
@@ -321,6 +326,7 @@ export class ChartComponent extends Component {
         high: dayHigh ? dayHigh: [],
         low: dayLow ? dayLow: [],
         open: dayOpen ? dayOpen: [],
+        visible: true,
       
         // cutomise colors
         increasing: {line: {color: 'green'}},
@@ -336,6 +342,7 @@ export class ChartComponent extends Component {
         high: fiveHigh ? fiveHigh: [],
         low: fiveLow ? fiveLow: [],
         open: fiveOpen ? fiveOpen: [],
+        visible: false,
       
         // cutomise colors
         increasing: {line: {color: 'green'}},
@@ -351,6 +358,7 @@ export class ChartComponent extends Component {
         high: monHigh ? monHigh: [],
         low: monLow ? monLow: [],
         open: monOpen ? monOpen: [],
+        visible: false,
       
         // cutomise colors
         increasing: {line: {color: 'green'}},
@@ -366,6 +374,7 @@ export class ChartComponent extends Component {
         high: ytdHigh ? ytdHigh: [],
         low: ytdLow ? ytdLow: [],
         open: ytdOpen ? ytdOpen: [],
+        visible: false,
       
         // cutomise colors
         increasing: {line: {color: 'green'}},
@@ -381,6 +390,7 @@ export class ChartComponent extends Component {
         high: yrHigh ? yrHigh: [],
         low: yrLow ? yrLow: [],
         open: yrOpen ? yrOpen: [],
+        visible: false,
       
         // cutomise colors
         increasing: {line: {color: 'green'}},
@@ -439,6 +449,11 @@ export class ChartComponent extends Component {
 
     var layout = {
       updatemenus: updatemenus,
+      xaxis: {
+        rangeslider: {
+         visible: true
+       }
+      },
       width: 900,
       height: 500,
     };
