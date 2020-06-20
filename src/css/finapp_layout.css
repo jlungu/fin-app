@@ -209,6 +209,7 @@
     font-weight: lighter;
     font-family: 'Oswald', sans-serif;
     margin-top: 7%;
+    display: inline-block;
 }
 #no_sec{
     margin-top: 30%;
@@ -219,7 +220,8 @@
 }
 .front_card{
     display: inline-block;
-    margin-top: 0%;
+    margin-top: -1%;
+    z-index: -10;
     height: 50px;
     width: 300px;
     transition:all 0.3s ease;
@@ -246,4 +248,17 @@
 .index_change{
     vertical-align: middle;
     font-size: 18px;
+}
+.front_icons_right{
+    display: inline-block;
+    font-size: 72px;
+    margin-left: 2%;
+    margin-right: -8%;
+    color:
+}
+.front_icons_left{
+    display: inline-block;
+    font-size: 72px;
+    margin-right: 2%;
+    margin-left: -8%;
 }
