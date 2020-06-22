@@ -23,7 +23,31 @@ export class StockHeader extends Component {
     }
 
     render(){
-        const {name, ticker, exchange} = this.state;
+        var {name, ticker, exchange} = this.state;
+        if (this.props.symbol == "^DJI"){
+            //DOW JONES isnt directly supported by finnhub. Manually inputting info
+            ticker = "^DJI"
+            name = "Dow Jones Industrial Average"
+            exchange = "DJI - DJI REAL TIME PRICE."
+        }
+        if (this.props.symbol == "^GSPC"){
+            //DOW JONES isnt directly supported by finnhub. Manually inputting info
+            ticker = "^GSPC"
+            name = "S&P 500 - Standard and Poor's 500"
+            exchange = "SNP - SNP REAL TIME PRICE."
+        }
+        if (this.props.symbol == "^IXIC"){
+            //DOW JONES isnt directly supported by finnhub. Manually inputting info
+            ticker = "^IXIC"
+            name = "NASDAQ Composite"
+            exchange = "NASDAQ GIDS - NASDAQ GIDS REAL TIME PRICE. "
+        }
+        if (this.props.symbol == "^RUT"){
+            //DOW JONES isnt directly supported by finnhub. Manually inputting info
+            ticker = "^RUT"
+            name = "Russell 2000"
+            exchange = "CHICAGO OPTIONS - CHICAGO OPTIONS DELAYED PRICE."
+        }
         return(
             <div class="stock-hdr-div">
                 <span id="stock-header">{ticker} - {name}</span>

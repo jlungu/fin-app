@@ -74,27 +74,27 @@ export class CompanyComponent extends Component {
                             <tbody>
                                 <tr>
                                     <td class="lcell">Return on Assets</td>
-                                    <td class="rcell">{roa}</td>
+                                    <td class="rcell">{roa? roa: 'N/A'}</td>
                                 </tr>
                                 <tr>
                                     <td class="lcell">Return On Equity</td>
-                                    <td class="rcell">{roe.toFixed(2)}%</td>
+                                    <td class="rcell">{roe? roe.toFixed(2)+'%': 'N/A'}</td>
                                 </tr>
                                 <tr>
                                     <td class="lcell">Return on Invest.</td>
-                                    <td class="rcell">{roi.toFixed(2)}%</td>
+                                    <td class="rcell">{roi? roi.toFixed(2)+"%": 'N/A'}</td>
                                 </tr>
                                 <tr>
                                     <td class="lcell">Profit Margin</td>
-                                    <td class="rcell">{pm.toFixed(2)}</td>
+                                    <td class="rcell">{pm? pm.toFixed(2): 'N/A'}</td>
                                 </tr>
                                 <tr>
                                     <td class="lcell">Operating Margin</td>
-                                    <td class="rcell">{om.toFixed(2)}</td>
+                                    <td class="rcell">{om? om.toFixed(2): 'N/A'}</td>
                                 </tr>
                                 <tr>
                                     <td class="lcell">Relative to S&P</td>
-                                    <td class="rcell">{relSP.toFixed(2)}</td>
+                                    <td class="rcell">{relSP? relSP.toFixed(2): 'N/A'}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -153,11 +153,11 @@ export class CompanyComponent extends Component {
                             <tbody>
                                  <tr>
                                     <td class="lcell">52 Wk High</td>
-                                    <td class="rcell">{yrHi.toFixed(2)}</td>
+                                    <td class="rcell">{yrHi? yrHi.toFixed(2): 'N/A'}</td>
                                 </tr>
                                 <tr>
                                     <td class="lcell">52 Wk Low</td>
-                                    <td class="rcell">{yrLo.toFixed(2)}</td>
+                                    <td class="rcell">{yrLo? yrLo.toFixed(2): 'N/A'}</td>
                                 </tr>
                                 <tr>
                                     <td class="lcell">Revenue(TTM)</td>
@@ -165,7 +165,7 @@ export class CompanyComponent extends Component {
                                 </tr>
                                 <tr>
                                     <td class="lcell">Rev. Growth</td>
-                                    <td class="rcell">{revGrowth.toFixed(2)}</td>
+                                    <td class="rcell">{revGrowth? revGrowth.toFixed(2) + "%": 'N/A'}</td>
                                 </tr>
                                 <tr>
                                     <td class="lcell">Cash Flow(TTM)</td>
@@ -173,7 +173,7 @@ export class CompanyComponent extends Component {
                                 </tr>
                                 <tr>
                                     <td class="lcell">Debt / Equity</td>
-                                    <td class="rcell">{dToE.toFixed(2)}</td>
+                                    <td class="rcell">{dToE? dToE.toFixed(2): 'N/A'}</td>
                                 </tr>
                             </tbody>
                         </table>

@@ -14,7 +14,7 @@ export class OverviewPageComponent extends Component {
                 <StockHeader symbol={symbol} />
                 <InfoComponent symbol={symbol} />
                 <ChartComponent symbol={symbol} /> 
-                <CompanyComponent symbol={symbol} />
+                {symbol.includes("^")? null:<CompanyComponent symbol={symbol} />}
             </div>
         );
     }

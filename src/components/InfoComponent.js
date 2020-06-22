@@ -161,6 +161,16 @@ export class ChartComponent extends Component {
     }
   };
 
+  //Simply determines if we are in market hours, and should indicate as so
+  withinMarketHours = (day) => {
+    if (day.getHours() == 9 && day.getMinutes() >= 30)
+      return true;
+    else if (day.getHours > 9 && day.getHours() < 4)
+      return true;
+    else
+      return false;
+  }
+
   render() {
     const {
       price,
@@ -176,13 +186,16 @@ export class ChartComponent extends Component {
       open
     } = this.state;
     const change = (price - prevClose).toFixed(2);
-    var mc =
-      marketCap > 999999
+    var mc = marketCap? (marketCap > 999999
         ? "$" + (marketCap / 1000000).toFixed(3) + "T" //TRILLIONS
         : marketCap > 999
         ? "$" + (marketCap / 1000).toFixed(3) + "B" //BILLIONS
-        : "$" + marketCap.toFixed(3) + "M"; //MILLIONS"
-
+        : "$" + marketCap.toFixed(3) + "M" //MILLIONS"
+    ): 'N/A'
+    //Changing tab to fit the proper stock!
+    document.title = this.props.symbol + " - $" + 
+    price.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    + "(" + (change < 0? change: "+" + change) + ")"
     var red = {
       //Red and green colors; depends on if stock is down or up.
       color: "red",
@@ -194,6 +207,8 @@ export class ChartComponent extends Component {
     var style = change < 0 ? red : green;
     var prefix = change < 0 ? "" : "+";
 
+    var today = new Date();
+
     return (
       <div class="container info-container">
         <h3 className="h3">Quick Look</h3>
@@ -203,11 +218,11 @@ export class ChartComponent extends Component {
               <tbody>
                 <tr>
                 <td class="lcell">Open</td>
-                  <td class="rcell">{open}</td>
+                  <td class="rcell">{open.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
                 </tr>
                 <tr>
                 <td class="lcell">Previous Close</td>
-                  <td class="rcell">{prevClose}</td>
+                  <td class="rcell">{prevClose.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
                 </tr>
                 <tr>
                   <td class="lcell">Market Cap</td>
@@ -229,20 +244,38 @@ export class ChartComponent extends Component {
           <div class="col-lg-3 w">
             <div id="priceDiv">
               <span style={style} id="currentPrice">
-                ${price.toFixed(2)}
+                ${price.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
               </span>
               <span id="priceChange">
                 {prefix}
                 {change}
               </span>
-              <span id="afterHoursHead">After Hours</span>
-              <span style={style} id="afterHrsPrice">
-                ${price.toFixed(2)}
-              </span>
-              <span id="afterHrsChng">
-                {prefix}
-                {change}
-              </span>
+              {today.getDay() != 6 && today.getDay() != 0?
+              <div>
+                <span id="afterHoursHead">After Hours</span>
+                <span style={style} id="afterHrsPrice">
+                  ${price.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                </span>
+                <span id="afterHrsChng">
+                  {prefix}
+                  {change}
+                </span>
+              </div>: this.withinMarketHours(today)? <span id="market-label">Market is: <p id="open">OPEN</p></span>
+              : today.getHours() >= 4 && today.getHours() < 8?
+              <div>
+                <span id="afterHoursHead">After Hours</span>
+                <span style={style} id="afterHrsPrice">
+                  ${price.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                </span>
+                <span id="afterHrsChng">
+                  {prefix}
+                  {change}
+                </span>
+              </div>
+              :
+                <span id="market-label">Market is: <p id="closed">CLOSED</p></span>
+              }
+              
             </div>
           </div>
           <div class="col-lg-3 w">
