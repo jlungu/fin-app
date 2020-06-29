@@ -1,5 +1,12 @@
 # A web app for financial analysis
-[](images/gal_1.png)
+### Home Page
+![](images/gal_1.png)
+### Autocomplete Search-Bar
+![](images/gal_2.png)
+### Stock Page(Top)
+![](images/gal_3.png)
+### Stock Page(Bottom)
+![](images/gal_4.png)
 ## What is it?
 This handy app utilizes multiple API calls to display information pertaining to a publically listed company. Stock price, stock history, metrics, and financial info; this app displays all of these and more in a simple, easy to use layout.
 ## What is the purpose of this project?
