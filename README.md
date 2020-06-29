@@ -1,5 +1,5 @@
 # A web app for financial analysis
-## Acces it [here](https://www.jamesjjlungu.com/finapp/home) for a demo!
+[](images/gal_1.png)
 ## What is it?
 This handy app utilizes multiple API calls to display information pertaining to a publically listed company. Stock price, stock history, metrics, and financial info; this app displays all of these and more in a simple, easy to use layout.
 ## What is the purpose of this project?
