@@ -8,9 +8,9 @@ import CompanyComponent from "./CompanyComponent";
  */
 export class OverviewPageComponent extends Component {
     render(){ 
-        const symbol = this.props.match.params.symbol.toUpperCase()
+        var symbol = this.props.match.params.symbol.toUpperCase()
         return(
-            <div>
+            <div>              
                 <StockHeader symbol={symbol} />
                 <InfoComponent symbol={symbol} />
                 <ChartComponent symbol={symbol} /> 

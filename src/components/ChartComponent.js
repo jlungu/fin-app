@@ -138,37 +138,39 @@ export class ChartComponent extends Component {
         var low = []
         var close = []
         var time = []
+        
+        if (data.o){
           //Here, we just filter the API call results to the normal market hours, 9:30AM - 4PM
-        for (let i = 0; i < data.o.length; i++){
-          date = new Date(data.t[i] * 1000)
-          if (date.getHours() >= 9 && date.getHours() <= 16){
-            if (date.getHours() == 9){
-              if (date.getMinutes() >= 30){
+          for (let i = 0; i < data.o.length; i++){
+            date = new Date(data.t[i] * 1000)
+            if (date.getHours() >= 9 && date.getHours() <= 16){
+              if (date.getHours() == 9){
+                if (date.getMinutes() >= 30){
+                  open.push(data.o[i])
+                  high.push(data.h[i])
+                  low.push(data.l[i])
+                  close.push(data.c[i])
+                  time.push(data.t[i])
+                }
+              }
+              else if (date.getHours() == 16){
+                if (date.getMinutes() < 30){
+                  open.push(data.o[i])
+                  high.push(data.h[i])
+                  low.push(data.l[i])
+                  close.push(data.c[i])
+                  time.push(data.t[i])
+                }
+              }
+              else{
                 open.push(data.o[i])
                 high.push(data.h[i])
                 low.push(data.l[i])
                 close.push(data.c[i])
                 time.push(data.t[i])
-              }
+              }   
             }
-            else if (date.getHours() == 16){
-              if (date.getMinutes() < 30){
-                open.push(data.o[i])
-                high.push(data.h[i])
-                low.push(data.l[i])
-                close.push(data.c[i])
-                time.push(data.t[i])
-              }
-            }
-            else{
-              open.push(data.o[i])
-              high.push(data.h[i])
-              low.push(data.l[i])
-              close.push(data.c[i])
-              time.push(data.t[i])
-            }
-            
-          }
+        }
         }
           this.setState({
             fiveOpen: open,

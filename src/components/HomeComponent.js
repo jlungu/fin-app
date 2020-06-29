@@ -109,7 +109,7 @@ export class HomeComponent extends Component {
       var x = JSON.parse(event.data);
       if (x.type != "trade") return;
       this.setState({
-        standardPoor: x.data[0].p,
+        dji: x.data[0].p,
       });
     });
     //WEBSOCKET - Subscribe to updates on S&P PRICING. Need to see real-time updates, WHEN ITS A TRADING DAY.
@@ -126,7 +126,7 @@ export class HomeComponent extends Component {
       var x = JSON.parse(event.data);
       if (x.type != "trade") return;
       this.setState({
-        nasdaq: x.data[0].p,
+        standardPoor: x.data[0].p,
       });
     });
 
@@ -144,7 +144,7 @@ export class HomeComponent extends Component {
       var x = JSON.parse(event.data);
       if (x.type != "trade") return;
       this.setState({
-        dowj: x.data[0].p,
+        nasdaq: x.data[0].p,
       });
     });
 
@@ -230,7 +230,7 @@ export class HomeComponent extends Component {
       <div id="hd" class="home-div">
         <div class="row justify-content-md-center">
             <div class="col-sm-4">
-              <div id={standardPoorChange < 0?"sandpdown" : "sandpdown"} class={standardPoorChange < 0? down: standardPoorChange > 0? up: same}
+              <div id={standardPoorChange < 0?"sandpdown" : "sandpup"} class={standardPoorChange < 0? down: standardPoorChange > 0? up: same}
                     onClick={this.search.bind(this, null, "^GSPC")}>
                   <div style={standardPoorChange < 0? red: standardPoorChange > 0? green: gray} class="card-body index_card_body">
                     <span class="index_name">S&P 500 |</span>
@@ -268,6 +268,7 @@ export class HomeComponent extends Component {
         <div id="input_home" class="input-group input-group-lg main-search">
           <form id="main-form" class="form-inline" onSubmit={this.search}>
             <div class="row">
+              <i  id="notice">**Please Note: Due to the fact that I am broke, I can only afford the free version of my stock api. As a result, I am limited to 30 API calls/min. If you load a page and no items load, give it a minute :)**</i>
             <input
               autoComplete="off"
               id="main-searchbar"

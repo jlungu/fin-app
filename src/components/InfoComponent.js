@@ -29,13 +29,16 @@ export class ChartComponent extends Component {
         "&token=brain17rh5rbgnjpuck0"
     )
       .then((res) => res.json())
-      .then((data) =>
+      .then((data) =>{
         this.setState({
           price: data.c,
+          afterHours: data.c,
           prevClose: data.pc,
           time: data.t,
-          open: data.o
+          open: data.o,
+          close: data.c,
         })
+      }   
       );
 
     //NEED: Market capitalization, shares outstanding.
@@ -43,7 +46,7 @@ export class ChartComponent extends Component {
       "https://finnhub.io/api/v1/stock/metric?symbol=" +
         this.props.symbol +
         "&metric=price&token=brain17rh5rbgnjpuck0"
-    )
+      )
       .then((res) => res.json())
       .then((data) =>
         this.setState({
@@ -75,7 +78,7 @@ export class ChartComponent extends Component {
         })
       );
 
-    //API call for PE RATIO.
+    //API call for EPS/BOOK VALUE.
     fetch(
       "https://finnhub.io/api/v1/stock/metric?symbol=" +
         this.props.symbol +
@@ -125,10 +128,16 @@ export class ChartComponent extends Component {
       volume = this.state.volume;
       var x = JSON.parse(event.data);
       if (x.type != "trade") return;
+      this.withinMarketHours(new Date())?
       this.setState({
         price: x.data[0].p,
         volume: (volume + x.data[0].v),
-      });
+      }): 
+      console.log("update")
+      this.setState({
+        afterHours: x.data[0].p,
+        volume: (volume + x.data[0].v),
+      })
     });
   }
 
@@ -165,7 +174,7 @@ export class ChartComponent extends Component {
   withinMarketHours = (day) => {
     if (day.getHours() == 9 && day.getMinutes() >= 30)
       return true;
-    else if (day.getHours > 9 && day.getHours() < 4)
+    else if (day.getHours() > 9 && day.getHours() < 16)
       return true;
     else
       return false;
@@ -183,9 +192,13 @@ export class ChartComponent extends Component {
       bookVal,
       exDivDate,
       divAmt,
-      open
+      open,
+      close,
+      afterHours
     } = this.state;
     const change = (price - prevClose).toFixed(2);
+    var percentChange = ((change / prevClose) * 100).toFixed(2)
+    const afterHoursChng = (afterHours - price).toFixed(2)
     var mc = marketCap? (marketCap > 999999
         ? "$" + (marketCap / 1000000).toFixed(3) + "T" //TRILLIONS
         : marketCap > 999
@@ -203,11 +216,16 @@ export class ChartComponent extends Component {
     var green = {
       color: "green",
     };
+    var grey = {
+      color: "grey",
+    };
 
-    var style = change < 0 ? red : green;
-    var prefix = change < 0 ? "" : "+";
-
+    var style = change < 0 ? red : change == 0? grey: green;
+    var aftrStyle = afterHoursChng< 0? red: afterHoursChng == 0? grey: green
+    var prefix = change < 0 ? "" : change == 0? " ":"+";
+    var aftrPrefix = afterHoursChng < 0? "": afterHoursChng == 0? " ": "+"
     var today = new Date();
+    
 
     return (
       <div class="container info-container">
@@ -249,27 +267,18 @@ export class ChartComponent extends Component {
               <span id="priceChange">
                 {prefix}
                 {change}
+                ({prefix}{percentChange}%)
               </span>
-              {today.getDay() != 6 && today.getDay() != 0?
+              {today.getDay() == 6 || today.getDay() == 0? <span id="market-label">Market is: <p id="closed">CLOSED</p></span>: this.withinMarketHours(today)? <span id="market-label">Market is: <p id="open">OPEN</p></span>
+              : today.getHours() >= 16 && today.getHours() < 20?
               <div>
                 <span id="afterHoursHead">After Hours</span>
-                <span style={style} id="afterHrsPrice">
-                  ${price.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                <span style={aftrStyle} id="afterHrsPrice">
+                  ${afterHours? afterHours.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","): 'N/A'}
                 </span>
                 <span id="afterHrsChng">
-                  {prefix}
-                  {change}
-                </span>
-              </div>: this.withinMarketHours(today)? <span id="market-label">Market is: <p id="open">OPEN</p></span>
-              : today.getHours() >= 4 && today.getHours() < 8?
-              <div>
-                <span id="afterHoursHead">After Hours</span>
-                <span style={style} id="afterHrsPrice">
-                  ${price.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                </span>
-                <span id="afterHrsChng">
-                  {prefix}
-                  {change}
+                  {aftrPrefix}
+                  {afterHoursChng}
                 </span>
               </div>
               :

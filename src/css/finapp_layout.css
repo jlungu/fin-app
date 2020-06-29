@@ -75,6 +75,8 @@
 }
 
 #afterHoursHead{
+    margin-top: 3%;
+    font-size: 18px;
     display: block;
 }
 
@@ -121,7 +123,7 @@
     z-index: 10;
     float: right;
     margin-left: 65%;
-    margin-top: 4.5%;
+    margin-top: 5%;
 }
 #main-form{
     margin-top: 8%;
@@ -384,4 +386,10 @@
     margin-top: -5%;
     font-weight: bold;
     color: green;
+}
+
+#notice{
+    font-size: 8px;
+    margin-left: 3.5%;
+    margin-bottom: 2px;
 }

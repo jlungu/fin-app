@@ -51,6 +51,7 @@ export class Navbar extends Component {
       searchFocused: false
     })
     const path = "/stock/" + document.getElementById("nav-search").value;
+    console.log(path)
     this.props.history.push(path);
   };
 
@@ -69,12 +70,12 @@ export class Navbar extends Component {
   /**
    * Takes input, navigates to that specific stocks page. Hides the selection menu
    */
-  searchLink(stonk){
+  searchLink = (stonk) =>{
     this.setState({
       searchFocused: false
     })
-    const path="/stock/"+stonk.substring(0, stonk.indexOf(' '))
-    this.props.history.push(path)
+      document.getElementById("nav-search").value = stonk.substring(0, stonk.indexOf(' '))
+      document.getElementById("submit_button").click()
   }
 
   //Triggered when the input bar is focused, time to show all thew stonks.
@@ -89,7 +90,7 @@ export class Navbar extends Component {
     return (
       <div>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark my-nav" >
-          <a class="navbar-brand" href="#">
+          <a class="navbar-brand">
           <i class="fas fa-landmark"></i>
           </a>
           <button
@@ -128,6 +129,7 @@ export class Navbar extends Component {
                 />
                 <button
                   class="btn btn-outline-success nav-btn"
+                  id="submit_button"
                   type="submit"
                 >
                   <span class="material-icons">search</span>
