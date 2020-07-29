@@ -165,15 +165,23 @@ export class Navbar extends Component {
                   </div>:
               null}
             </div>
-            <div class="col-sm-2">
-   
+            <div class="col-sm-1">
+            
             </div>
-            <div class="col-sm-2 source_code">
-              <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    {this.state.loggedIn? <div><span id="log_links"onClick={this.logoutUser}>Logout</span></div>: <div id="log_links" onClick={this.redirectLogin}>Log In</div>}
-                </li>
-              </ul>
+            <div class="col-lg-2">
+              {this.state.loggedIn? 
+              <div class="logout_dropdown">
+              <div id="logged_in_div">
+                <img id="user_icon" src={ require('../images/user_img.png') }></img>
+                <span id="log_links">{this.props.auth.user.name}</span>
+              </div>
+              <div class="logged_in_content">
+              <span>{this.props.auth.user.email}</span>
+                <hr id="hr_loggedout"/>
+                <p id="logout_btn" onClick={this.logoutUser}>Logout</p>
+              </div>
+            </div>
+              : <div id="log_in_div" onClick={this.redirectLogin}>Login</div>}
             </div>
           </div>
         </nav>
@@ -189,6 +197,7 @@ Navbar.propTypes = {
 
 const mapStateToProps = state => ({
   auth: state.auth, 
+  user: state.user,
   errors: state.errors
 });
 

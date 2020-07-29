@@ -17,10 +17,9 @@ export const loginUser = (userData) => dispatch  => {
     axios.post("http://localhost:5000/api/users/login", userData)
         .then(res => {
             //SAVING TOKEN TO LOCAL STORAGE
+            console.log(res.data)
             const { token } = res.data
             localStorage.setItem("jwtToken", token);
-            //SAVING USER EMAIL TO LOCAL STORAGE AS WELL
-            localStorage.setItem("email", userData.email)
             setAuthToken(token)
             const usr = jwt_decode(token)
             dispatch(setCurrentUser(usr))
@@ -45,7 +44,6 @@ export const setUserLoading = () => {
 export const logoutUser = () => dispatch => {
     //REMOVE TOKEN FROM LOCAL STORAGE
     localStorage.removeItem("jwtToken")
-    localStorage.removeItem("email")
     setAuthToken(false)
     //NOW, NO CURRENT USER
     dispatch(setCurrentUser({}))

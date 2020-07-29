@@ -199,7 +199,7 @@ export class HomeComponent extends Component {
    */
   nothing = () => {
     /**
-     * WHAT DOES A HOURS WEAR?
+     * WHAT DOES A HOUSE WEAR?
      * ADDRESS
      */
   }
