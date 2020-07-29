@@ -3,6 +3,10 @@ import { withRouter} from 'react-router-dom';
 import {Link} from 'react-router-dom'
 import Spinner from "react-bootstrap/Spinner";
 
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { logoutUser } from "../actions/authActions";
+
 export class Navbar extends Component {
   constructor(props){
     super(props);
@@ -10,11 +14,15 @@ export class Navbar extends Component {
       stocks: [],
       filteringStocks: [],
       searchFocused: false,
+      loggedIn: false
     }
   }
 
   componentDidMount(){
     //This event listener dictates whether we are to show or hide the "autocomplete" menu.
+    if (this.props.auth.isAuthenticated) {      
+      this.setState({loggedIn: true})
+    }
     document.addEventListener("click", (evt) => {
       if (evt.target != document.getElementById("nav-search") 
       && evt.target != document.getElementById("stock-option-nav")
@@ -22,7 +30,7 @@ export class Navbar extends Component {
         this.setState({
           searchFocused: false
         })
-  });
+    });
 
     fetch('https://finnhub.io/api/v1/stock/symbol?exchange=US&token=brain17rh5rbgnjpuck0')
     .then((res) => res.json())
@@ -84,6 +92,16 @@ export class Navbar extends Component {
     this.setState({
       searchFocused: true
     })
+  }
+  //Redirects user to login page.
+  redirectLogin = () => {
+    this.props.history.push('/login')
+  }
+
+  //Function simply logs user out.
+  logoutUser = () => {
+    this.props.logoutUser();
+    window.location.reload(false)
   }
 
   render() {
@@ -147,12 +165,13 @@ export class Navbar extends Component {
                   </div>:
               null}
             </div>
-            <div class="col-sm-3 source_code">
+            <div class="col-sm-2">
+   
+            </div>
+            <div class="col-sm-2 source_code">
               <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                  <a class="nav-link" href="https://github.com/jlungu/fin-app" id="src-code">
-                    Source Code <span class="sr-only">(current)</span>
-                  </a>
+                    {this.state.loggedIn? <div><span id="log_links"onClick={this.logoutUser}>Logout</span></div>: <div id="log_links" onClick={this.redirectLogin}>Log In</div>}
                 </li>
               </ul>
             </div>
@@ -162,4 +181,15 @@ export class Navbar extends Component {
     );
   }
 }
-export default withRouter(Navbar);
+Navbar.propTypes = {
+  logoutUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth, 
+  errors: state.errors
+});
+
+export default connect(mapStateToProps, { logoutUser })(withRouter(Navbar));

@@ -357,7 +357,6 @@
 .source_code{
     position: relative;
     float: right;
-    margin-left: 10%;
 }
 #src-code{
     display: inline-block;
@@ -408,4 +407,54 @@
 }
 #break{
     width: 30%;
+}
+#log_links{
+    color: white;
+    transition: ease 0.3s all;
+    float: right;
+}
+#log_links:hover{
+    cursor: pointer;
+    color: lightgray;
+    transition: ease 0.3s all;
+}
+#login_failed{
+    font-size: 14px;
+    color: red;
+}
+#error_text{
+    margin-bottom: 2%;
+}
+#user_icon{
+    color: white;
+}
+
+#register-component{
+    text-align: center;
+    margin-top: 10%;
+    margin-left: 31%;
+    margin-right: -31%;
+}
+#register-card-body{
+    display: inline-block;
+}
+#register-card{
+    width: 40%;
+}
+#password_match{
+    display: block;
+    margin-top: 1%;
+    margin-left: 2%;
+    margin-right: -28%;
+    float: left;
+    font-size: 12px;
+    color: red;
+    transition: ease 0.4s all;
+}
+#register_failed{
+    font-size: 14px;
+    color: red;
+}
+#switch-login{
+    margin-left: 5%;
 }

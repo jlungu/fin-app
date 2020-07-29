@@ -7,8 +7,10 @@ const keys = require("../../config/keys");
 const validateRegisterInput = require("../../validation/register")
 const validateLoginInput = require("../../validation/login")
 
-const User = require("../../models/user.model");
+require("../../models/user.model.js");
+var User= require('mongoose').model('users');
 
+//REGISTER path
 router.post("/register", (req, res) =>{
 	const {errors, isValid} = validateRegisterInput(req.body)
 	if (!isValid){
@@ -23,7 +25,6 @@ router.post("/register", (req, res) =>{
 				email: req.body.email,
 				password: req.body.password
 			})
-			console.log(newUser)
 			//Want to hash passwords before storing in user's password field/database. Use bcrypt for this.
 			bcrypt.genSalt(10, (err, salt) => {
 				bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -39,7 +40,7 @@ router.post("/register", (req, res) =>{
 		}
 	})
 })
-
+//LOGIN path.
 router.post('/login', (req, res) => {
 	const {errors, isValid} = validateLoginInput(req.body)
 
@@ -52,10 +53,8 @@ router.post('/login', (req, res) => {
 
 	User.findOne({email}).then(user => {
 		if(!user)
-			return res.stats(404).json({emailnotfound: "Email not found"})
-
-	});
-	bcrypt.compare(password, user.password).then(isMatch => {
+			return res.status(404).json({emailnotfound: "Email not found"})
+		bcrypt.compare(password, user.password).then(isMatch => {
 		if(isMatch){
 			const payload = {
 				is: user.id,
@@ -79,6 +78,7 @@ router.post('/login', (req, res) => {
 				return res.status(400).json({passwordincorrect: "Password incorrect"})
 			}
 	})
+	});
 
 })
 
