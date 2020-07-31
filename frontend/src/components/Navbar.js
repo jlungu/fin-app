@@ -131,6 +131,14 @@ export class Navbar extends Component {
                     Home <span class="sr-only">(current)</span>
                   </a>
                 </li>
+                {this.props.auth.isAuthenticated?
+                <li class="nav-item">
+                  <div class="dropdown_watchlist">
+                    Watchlist
+                  </div>
+                </li> 
+                : null
+                }
               </ul>
             </div>
             <div class="col-sm-6 nav-mid">

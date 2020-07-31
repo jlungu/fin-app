@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { loginUser } from "../actions/authActions";
+import { getWatchlists } from "../actions/watchlistActions"
 
 export class LoginComponent extends Component {
     constructor(props){
@@ -18,6 +19,7 @@ export class LoginComponent extends Component {
     componentDidMount() {
         //Redirects user if theyre already logged in.
         if (this.props.auth.isAuthenticated) {
+          this.props.getWatchlists(this.props.auth.user.email)
           this.props.history.push("/home");
         }
     }
@@ -92,6 +94,7 @@ export class LoginComponent extends Component {
 
 LoginComponent.propTypes = {
     loginUser: PropTypes.func.isRequired,
+    getWatchlists: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired
 };
@@ -101,4 +104,4 @@ const mapStateToProps = state => ({
     errors: state.errors
 });
 
-export default connect(mapStateToProps, { loginUser })(LoginComponent);
+export default connect(mapStateToProps, { loginUser, getWatchlists })(LoginComponent);

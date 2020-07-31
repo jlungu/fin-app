@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { registerUser } from "../actions/authActions";
+import { addWatchlist } from "../actions/watchlistActions"
 
 export class RegisterComponent extends Component {
     constructor(props){
@@ -18,9 +19,13 @@ export class RegisterComponent extends Component {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.errors) {
+            
           this.setState({
             errors: nextProps.errors
           });
+        }
+        else {
+            
         }
     }
 
@@ -50,12 +55,20 @@ export class RegisterComponent extends Component {
             password: this.state.password,
             passwordAgain: this.state.password2
         }
-        this.props.registerUser(newUser, this.props.history); 
+        this.props.registerUser(newUser, this.props.history);
+        if (this.state.errors == null){
+            const watchlist = {
+                email: newUser.email,
+                listname: "Favorites",
+                stocks: []
+            }
+            this.props.addWatchlist(watchlist, true)
+            this.props.history.push("/login")
+        }
     }
 
     loginScreen = e => {
         e.preventDefault();
-
         this.props.history.push("/login")
     }
 
@@ -98,6 +111,7 @@ export class RegisterComponent extends Component {
 }
 RegisterComponent.propTypes = {
   registerUser: PropTypes.func.isRequired,
+  addWatchlist: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
 };
@@ -109,5 +123,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { registerUser }
+  { registerUser, addWatchlist }
 )(withRouter(RegisterComponent));

@@ -18,6 +18,7 @@ import RegisterComponent from "./components/RegisterComponent";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
+import { getWatchlists } from "./actions/watchlistActions"
 
 //Checking if user is already logged in. If so, we re-log them in
 if (localStorage.jwtToken) {
@@ -26,6 +27,7 @@ if (localStorage.jwtToken) {
 
   const decoded = jwt_decode(token);
   store.dispatch(setCurrentUser(decoded));
+  store.dispatch(getWatchlists(decoded.email))//Getting users watchlists to save in store.
 
   const currentTime = Date.now() / 1000; // to get in milliseconds
   if (decoded.exp < currentTime) {

@@ -7,9 +7,12 @@ import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING } from "./types"
 //REGISTER
 export const registerUser = (userData, history) => dispatch => {
     axios.post("/api/users/register", userData)
-        .then(res => history.push("/login"))//Redir to login page!
+        .then(res => {
+           // history.push("/login")//Redir to login page!
+        })
         .catch(err => dispatch({type: GET_ERRORS, payload: err.response.data})
     );
+    //WHEN REGISTERING, A USER IS AUTOMATCALLY ASSIGNED A WATCHLIST
 };
 
 //LOGIN
@@ -24,7 +27,7 @@ export const loginUser = (userData) => dispatch  => {
             const usr = jwt_decode(token)
             dispatch(setCurrentUser(usr))
         })
-        .catch(err => dispatch({type: GET_ERRORS, payload: err.response.data}))
+        .catch(err => dispatch({type: GET_ERRORS, payload: err.response.data})) 
 }
 
 //SETTING SESSION USER

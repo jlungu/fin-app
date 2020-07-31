@@ -104,7 +104,6 @@ export class ChartComponent extends Component {
     )
       .then((res) => res.json())
       .then((data) =>{
-        console.log(data)
         this.setState({
           exDivDate: data.length != 0? data[0].exDate: 'N/A',
           divAmt: data.length != 0? data[0].amount: 'N/A',
