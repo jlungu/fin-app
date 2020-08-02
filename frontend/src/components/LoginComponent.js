@@ -12,7 +12,7 @@ export class LoginComponent extends Component {
         this.state = {
             username: '',
             password: '',
-            errors: null
+            errors: null,
         }
     }
 
@@ -65,10 +65,11 @@ export class LoginComponent extends Component {
 
     render(){
         return(
+            <div>
             <div class="row" id="login-component">
                <div class="card" id="login-card">
                     <div class="card-body" id="login-card-body">
-                       <h4>Login</h4> 
+                       <h4 id="login">Login to FinApp</h4> 
                        <hr id="break"/>
                        <div id="error_text">
                        {this.state.errors != null? <span id="login_failed"><i>Login Failed. Either email or password is incorrect.</i></span>: null}
@@ -82,12 +83,13 @@ export class LoginComponent extends Component {
                             <label id="password_label" for="password_input">Password</label>
                             <input type="password" onChange={this.onPasswordChange} class="form-control" id="password_input" placeholder="Password" />
                         </div> 
-                        <button type="submit" class="btn btn-primary">Log In</button>
-                        <button class="btn btn-outline-primary" id="switch-login" onClick={this.registerScreen}>Register</button>
+                        <button type="submit" class="btn btn-success">Log In</button>
+                        <button class="btn btn-outline-danger" id="switch-login" onClick={this.registerScreen}>Register</button>
                         </form>
                     </div>
                 </div>
             </div>
+        </div>
         )
     }
 }

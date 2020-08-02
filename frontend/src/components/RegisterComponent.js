@@ -77,7 +77,8 @@ export class RegisterComponent extends Component {
             <div class="row" id="register-component">
                <div class="card" id="register-card">
                     <div class="card-body" id="register-card-body">
-                       <h4>Register</h4> 
+                       <h4 id="login">Create a FinApp Account</h4> 
+                       <h6 id="register_subheader">Create an account to follow your favorite stocks!</h6>
                        <hr id="break"/>
                        <div id="error_text">
                             {this.state.errors != null? <span id="register_failed"><i>Email already in use. Please log in with your email.</i></span>: null}
@@ -100,8 +101,8 @@ export class RegisterComponent extends Component {
                             {this.state.password2 == this.state.password? null: this.state.password2 == ""? null: <span id="password_match"><i>Passwords must match!</i></span>}
                             <input type="password" onChange={this.updatePassword2} class="form-control" id="password_input" placeholder="Password" />
                         </div> 
-                        <button type="submit" class="btn btn-primary">Create Account</button>
-                        <button class="btn btn-outline-primary" id="switch-login" onClick={this.loginScreen}>Login</button>
+                        <button type="submit" class="btn btn-success">Create Account</button>
+                        <button class="btn btn-outline-danger" id="switch-login" onClick={this.loginScreen}>Login</button>
                         </form>
                     </div>
                 </div>

@@ -10,7 +10,7 @@ export class OverviewPageComponent extends Component {
     render(){ 
         var symbol = this.props.match.params.symbol.toUpperCase()
         return(
-            <div>              
+            <div id="stock_info_page">             
                 <StockHeader symbol={symbol} />
                 <InfoComponent symbol={symbol} />
                 <ChartComponent symbol={symbol} /> 

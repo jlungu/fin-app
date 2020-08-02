@@ -14,7 +14,8 @@ export class Navbar extends Component {
       stocks: [],
       filteringStocks: [],
       searchFocused: false,
-      loggedIn: false
+      loggedIn: false,
+      formattedStocks: []
     }
   }
 
@@ -22,6 +23,15 @@ export class Navbar extends Component {
     //This event listener dictates whether we are to show or hide the "autocomplete" menu.
     if (this.props.auth.isAuthenticated) {      
       this.setState({loggedIn: true})
+      let formatStock = []
+
+      this.props.watchlists.watchlists.forEach(wl => {
+        wl.stocks.forEach(stock => {
+          formatStock.push(this.fetchQuote(stock))
+            // .then(res => formatStock.push(res))
+        })
+      })
+      this.setState({formattedStocks: formatStock})
     }
     document.addEventListener("click", (evt) => {
       if (evt.target != document.getElementById("nav-search") 
@@ -82,7 +92,12 @@ export class Navbar extends Component {
     this.setState({
       searchFocused: false
     })
+    if (stonk.indexOf(" ") < 0){
+      document.getElementById("nav-search").value = stonk
+    }
+    else{
       document.getElementById("nav-search").value = stonk.substring(0, stonk.indexOf(' '))
+    }
       document.getElementById("submit_button").click()
   }
 
@@ -104,9 +119,24 @@ export class Navbar extends Component {
     window.location.reload(false)
   }
 
+  /**
+   * Needed to fetch quote for watchlist ticker
+   * @param {*} ticker 
+   *  Ticker we fetch quote for.
+   */
+  fetchQuote = (ticker) => {
+    let stringBuilder = ticker + " | "
+    return ticker
+    // return fetch('https://sandbox.iexapis.com/stable/stock/'+ticker+'/quote?token=Tpk_dee3dc6744404fa5a7f775b21b00554d')
+    //   .then(res => res.json())
+    //   .then(data => {
+    //      return stringBuilder + data.latestPrice + " " + data.change
+    //   })     
+  }
+  
   render() {
     return (
-      <div>
+      <div id="navbar">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark my-nav" >
           <a class="navbar-brand">
           <i class="fas fa-landmark"></i>
@@ -127,15 +157,21 @@ export class Navbar extends Component {
             <div class="col-sm-3">
               <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                  <a class="nav-link" href="/home">
+                  <a class="nav-link" href="/home" id="home_nav">
                     Home <span class="sr-only">(current)</span>
                   </a>
                 </li>
                 {this.props.auth.isAuthenticated?
                 <li class="nav-item">
+                  <div class="watchlist_div">
                   <div class="dropdown_watchlist">
                     Watchlist
                   </div>
+                    <div class="watchlist_content">
+                      {this.props.watchlists.watchlists[0] != undefined? this.state.formattedStocks.map(wl => <div onClick={this.searchLink.bind(this, wl)} class="watchlist_item">{wl}<hr id="break"/></div>): null}
+                    </div>
+                  </div>
+                  
                 </li> 
                 : null
                 }
@@ -148,7 +184,7 @@ export class Navbar extends Component {
                   class="form-control"
                   type="search"
                   id="nav-search"
-                  placeholder="Enter a Stock..."
+                  placeholder="Enter a Stock"
                   aria-label="Search"
                   onFocus={this.focusInput}
                   onChange={this.clarifySearch}
@@ -184,7 +220,7 @@ export class Navbar extends Component {
                 <span id="log_links">{this.props.auth.user.name}</span>
               </div>
               <div class="logged_in_content">
-              <span>{this.props.auth.user.email}</span>
+              <p id="user_email">{this.props.auth.user.email}</p>
                 <hr id="hr_loggedout"/>
                 <p id="logout_btn" onClick={this.logoutUser}>Logout</p>
               </div>
@@ -200,13 +236,15 @@ export class Navbar extends Component {
 Navbar.propTypes = {
   logoutUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired
+  errors: PropTypes.object.isRequired,
+  watchlists: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   auth: state.auth, 
   user: state.user,
-  errors: state.errors
+  errors: state.errors,
+  watchlists: state.watchlists
 });
 
 export default connect(mapStateToProps, { logoutUser })(withRouter(Navbar));

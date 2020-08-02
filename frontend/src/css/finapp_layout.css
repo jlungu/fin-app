@@ -4,6 +4,19 @@
     margin-top: 10px;
     border-radius: 5px;
 }
+#home_nav{
+    border-left: 1px solid #333;
+    border-right: 1px solid #333;
+    padding-right: 20px;
+    padding-left: 20px;
+    transition: ease 0.3s all;
+}
+#home_nav:hover{
+    cursor: pointer;
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+    transition: ease 0.3s all;
+}
 
 #timePlot{
     display: inline-block;
@@ -102,6 +115,7 @@
 }
 .company-container{
     position: relative;
+    margin-bottom: 5%;
     z-index: 10;
 }
 .main-search{
@@ -111,7 +125,9 @@
 }
 
 .home-div{
+    animation: fadeIn 0.75s;
     text-align: center;
+    margin-bottom: 5%;
 }
 #swap-data-but{
    margin-right: 5px;
@@ -151,6 +167,7 @@
 }
 
 #stock-select-div{
+    animation: fadeIn 0.3s;
     border-style: solid;
     border-color: lightgray;
     border-width: 1px;
@@ -166,7 +183,9 @@
     transition:all 0.3s ease;
     z-index: 11;
 }
-
+#input_home{
+    animation: fadeIn 1s;
+}
 .stock-option:hover{
     color: black;
     cursor: pointer;
@@ -324,9 +343,12 @@
     text-align: left;
     padding-left: 10px;
 }
-
+#navbar{
+    animation: fadeIn 0.75s;
+}
 #stock-select-div-nav{
     border-style: solid;
+    animation: fadeIn 0.3s;
     border-color: lightgray;
     border-width: 1px;
     border-radius: 5px;
@@ -391,8 +413,11 @@
     margin-left: 3.5%;
     margin-bottom: 2px;
 }
-
+#stock_info_page{
+    animation: fadeIn 0.75s;
+}
 #login-component{
+    animation: fadeIn 0.75s;
     text-align: center;
     margin-top: 10%;
     margin-left: 31%;
@@ -427,11 +452,19 @@
     color: white;
 }
 
+#register_subheader{
+    font-style: italic;
+    font-weight: 300;
+    margin-top: -1%;
+}
+
 #register-component{
     text-align: center;
-    margin-top: 10%;
+    margin-top: 5%;
+    margin-bottom: 10%;
     margin-left: 31%;
     margin-right: -31%;
+    animation: fadeIn 0.75s;
 }
 #register-card-body{
     display: inline-block;
@@ -457,8 +490,8 @@
     margin-left: 5%;
 }
 #user_icon{
-    height: 22%;
-    width: 22%;
+    height: 20%;
+    width: 20%;
     border-radius: 50%;
     margin-right: 3%;
 }
@@ -466,24 +499,30 @@
     display: inline-block;
     padding-top: 5px;
     padding-bottom: 5px;
-    border: 1px solid transparent;
+    border-left: 1px solid #333;
+    border-right: 1px solid #333;
     transition: ease 0.2s all;
-    border-radius: 5px;
 }
 #logged_in_div:hover{
     transition: ease 0.2s all;
-    border: 1px solid white;
+    border-left: 1px solid white;
+    border-right: 1px solid white;
     cursor: pointer;
 }
   .logout_dropdown {
     position: relative;
     display: inline-block;
   }
-  
+#user_email{
+    margin-top: 5%;
+    margin-bottom: 0%;
+}
   .logged_in_content {
     transition: ease 0.2s all;
     opacity: 0;
-    border-radius: 5px;
+    border-radius: 3px;
+    border: 1px solid gray;
+    margin-top: 4.5%;
     position: absolute;
     font-size: 12px;
     background-color: white;
@@ -502,7 +541,8 @@
 .logged_in_content a:hover {background-color: #ddd;}
 .logout_dropdown:hover .logged_in_content {transition: ease 0.2s all;opacity: 1;}
 .logout_dropdown:hover #logged_in_div{
-    border: 1px solid white;
+    border-left: 1px solid white;
+    border-right: 1px solid white;
 }
 
 #hr_loggedout{
@@ -528,25 +568,89 @@
     padding-top: 5px;
     color:white;
     padding-bottom: 5px;
-    border: 1px solid transparent;
+    border-left: 1px solid #333;
+    border-right: 1px solid #333;
     transition: ease 0.3s all;
-    border-radius: 5px;
     padding-right: 10%;
     padding-left: 10%;
 }
 #log_in_div:hover{
     transition: ease 0.3s all;
-    border: 1px solid white;
-    color: #333;
-    background-color: white;
+    border-left: 1px solid white;
+    border-right: 1px solid white;
     cursor: pointer;
 }
-.dropdown_watchlist{
-    color: white;
-    position: relative;
-    margin-top: 11%;
-    margin-left: 20%;
+
+.watchlist_div{
+    display: inline-block;
+    transition: ease 0.2s all;
 }
+.watchlist_item{
+   font-size: 14px;
+   display: block;
+   transition: ease 0.3s all;
+}
+.watchlist_item:hover{
+    transition: ease 0.3s all;
+    cursor: pointer;
+    background-color: rgb(231, 231, 231);
+}
+.dropdown_watchlist {
+    position: relative;
+    display: inline-block;
+    color: white;
+    padding-left: 20px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-right: 20px;
+    border-left: 1px solid #333;
+    border-right: 1px solid #333;
+    margin-left: 5%;
+    transition: ease 0.2s all;
+}
+.dropdown_watchlist:hover{
+    cursor: pointer;
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+    transition: ease 0.2s all;
+}
+  
+  .watchlist_content {
+    transition: ease 0.2s all;
+    opacity: 0;
+    border-radius: 3px;
+    margin-top: 2.8%;
+    position: absolute;
+    font-size: 12px;
+    background-color: white;
+    width: 42%;
+    border: 1px solid gray;
+    margin-left: 1.5%;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 20;
+  }
+  
+#break{
+    margin-top: 5%;
+    width: 100%;
+    margin-bottom: 0%;
+}
+.logged_in_content a {
+color: black;
+padding: 12px 16px;
+text-decoration: none;
+display: block;
+}
+  
+.watchlist_content a:hover {background-color: #ddd;}
+.watchlist_div:hover .watchlist_content {transition: ease 0.2s all;opacity: 1;}
+.watchlist_div:hover .dropdown_watchlist{
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+    transition: ease 0.2s all;
+}
+
+
 #stock_header_name{
     display: block;
 }
@@ -574,4 +678,86 @@
     transition: ease 0.3s all;
     cursor: pointer;
     color: gray;
+}
+#no_watchlist{
+    color: gray;
+    border: 1px solid gray;
+    width: 18%;
+    padding: 5px;
+    font-style: italic;
+    border-radius: 5px;
+    display: inline-block;
+}
+#watchlist_alert{
+    width: 17%;
+    z-index: 20;
+    position: fixed;
+    bottom:25px;
+    right: 0;
+    margin-right: 1%;
+    font-size: 14px;
+    animation: fadeIn 0.3s;
+}
+#watchlist_bar{
+    overflow-x:hidden; 
+    clear: both;
+    left: 0;
+    bottom: 0;
+    position: fixed;
+    width: 100%;
+    color: white;
+    text-align: center;
+    z-index: 10;
+}
+#watchlist_item_green{
+    display: inline-block;
+    border: 1px solid green;
+    color: green;
+    background-color: white;
+    padding: 5px;
+    border-radius: 3px;
+    margin-right: -1px;
+    transition: ease 0.3s all;
+}
+#watchlist_item_green:hover{
+   transition: ease 0.3s all;
+   cursor: pointer;
+   background-color: rgb(230, 252, 230);
+}
+#watchlist_item_red{
+    display: inline-block;
+    border: 1px solid red;
+    color: red;
+    background-color: white;
+    padding: 5px;
+    border-radius: 3px;
+    margin-right: -1px;
+}
+#watchlist_item_red:hover{
+    transition: ease 0.3s all;
+    cursor: pointer;
+    background-color: rgb(255, 240, 240);
+}
+
+#login_header{
+    text-align: center;
+    font-size: 30px;
+    margin-top: 10%;
+    margin-bottom: -10%;
+}
+#login{
+    font-family: 'Oswald', sans-serif;
+    font-weight: bold;
+    font-size: 32px
+}
+
+
+/*======== ANIMATIONS ========*/
+@-webkit-keyframes fadeIn {
+    from { opacity: 0; }
+      to { opacity: 1; }
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+      to { opacity: 1; }
 }

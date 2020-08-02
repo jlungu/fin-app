@@ -10,12 +10,15 @@ export class HomeComponent extends Component {
       stocks: [],
       filteringStocks: [],
       searchFocused: false,
-      dowj: -1,
+      dowj: 26428.32,
+      dowjPrevClose: 26313.65,
       dowjOpen: -1,
-      standardPoor: -1,
+      standardPoor: 3271.12,
       standardPoorOpen: -1,
-      nasdaq: -1,
-      nasdaqOpen: -1
+      standardPoorPrevClose: 3246.22,
+      nasdaq: 10745.27,
+      nasdaqOpen: -1,
+      nasdaqPrevClose: 10741.50
     }
   }
   //This function will actually navigate to that page.
@@ -48,7 +51,6 @@ export class HomeComponent extends Component {
     fetch('https://finnhub.io/api/v1/stock/symbol?exchange=US&token=brain17rh5rbgnjpuck0')
     .then((res) => res.json())
     .then((data) => {
-      console.log(data)
       var stonks = []
       for (let i = 0; i < data.length; i++){
         if (data[i].description.length > 0)
@@ -74,7 +76,6 @@ export class HomeComponent extends Component {
       //   dowjPrevClose: data.pc,
       //   dowj: data.c
       // })
-      console.log(data)
     })
     //S&P
     fetch('https://finnhub.io/api/v1/quote?symbol=^GSPC&token=brain17rh5rbgnjpuck0')
@@ -84,7 +85,6 @@ export class HomeComponent extends Component {
       //   standardPoorPrevClose: data.pc,
       //   standardPoor: data.c
       // })
-      console.log(data)
     })
     //NASDAQ
     fetch('https://finnhub.io/api/v1/quote?symbol=^IXIC&token=brain17rh5rbgnjpuck0')
@@ -94,7 +94,6 @@ export class HomeComponent extends Component {
       //   nasdaqPrevClose: data.pc,
       //   nasdaq: data.c
       // })
-      console.log(data)
     })
 
 
@@ -230,7 +229,8 @@ export class HomeComponent extends Component {
 
 
     return (
-      <div id="hd" class="home-div">
+      <div>
+        <div id="hd" class="home-div">
         <div class="row justify-content-md-center">
             <div class="col-sm-4">
               <div id={standardPoorChange < 0?"sandpdown" : "sandpup"} class={standardPoorChange < 0? down: standardPoorChange > 0? up: same}
@@ -279,7 +279,7 @@ export class HomeComponent extends Component {
               class="form-control"
               aria-label="Large"
               aria-describedby="inputGroup-sizing-lg"
-              placeholder="Enter a Stock..."
+              placeholder="Enter a Stock"
               onFocus={this.focusInput}
               onBlur={this.defocusInput}
               onChange={this.clarifySearch}
@@ -299,7 +299,8 @@ export class HomeComponent extends Component {
                 }
               </ul>
             </div>:
-            null}        
+            null}    
+        </div>
         </div>
       </div>
     );

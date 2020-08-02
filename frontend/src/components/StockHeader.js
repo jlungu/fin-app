@@ -10,7 +10,9 @@ export class StockHeader extends Component {
             name: '',
             exchange: '',
             ticker: '',
-            onWatchlist: false
+            onWatchlist: false,
+            added: false,
+            deleted: false
         }
     }
 
@@ -39,12 +41,16 @@ export class StockHeader extends Component {
             let wl = favorites
             wl.stocks = wl.stocks.filter(w => w != this.state.ticker)
             this.props.updateWatchlist(wl._id, wl, this.props.watchlists)
+            this.setState({deleted: true})//ANIMATION! Shows alert, saying you removed it from watchlist. Then dissapears!
+            setTimeout(() => {this.setState({deleted: false})}, 3000)
         }
         else {
             //Add to watchlist
             let wl = favorites
             wl.stocks.push(this.state.ticker)
             this.props.updateWatchlist(wl._id, wl, this.props.watchlists)
+            this.setState({added: true})
+            setTimeout(() => {this.setState({added: false})}, 3000)
         }
     }
     
@@ -87,6 +93,12 @@ export class StockHeader extends Component {
                 : <i id="favorite_button" onClick={this.toggleFavorite} class="far fa-star"></i>: null} */}
                 </div>
                 <span id="stock-subheader">{exchange}</span>
+                <div id="watchlist_alert" class="alert alert-success  fade show" role="alert" hidden={!this.state.added}>
+                    <strong>{this.state.ticker}</strong> added to favorites
+                </div>
+                <div id="watchlist_alert" class="alert alert-danger  fade show" role="alert" hidden={!this.state.deleted}>
+                    <strong>{this.state.ticker}</strong> removed from favorites
+                </div>
             </div>
         );
     }

@@ -36,10 +36,13 @@ export const getWatchlists = (userEmail) => dispatch => {
     const params = {
         email: userEmail
     }
-    axios.get("/api/watchlists/getAllWithEmail", {params})
+    return axios.get("/api/watchlists/getAllWithEmail", {params})
         .then(res => {
-            dispatch(setWatchlists(res.data))})
-        .catch(err => dispatch({type: GET_ERRORS, payload: err.response.data})) 
+            return dispatch(setWatchlists(res.data))
+        })
+        .catch(err => {
+            return dispatch({type: GET_ERRORS, payload: err.response.data})
+        }) 
 }
 
 //DELETE WATCHLISTS
