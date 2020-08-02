@@ -7,6 +7,8 @@
 ![](frontend/images/gal_3.png)
 ### Stock Page(Bottom)
 ![](frontend/images/gal_4.png)
+#### Built with:
+![](https://gossett.dev/static/b52512d9402df77db7e9436af0bb44d0/b53ef/mern.png)
 ## What is it?
 This handy app utilizes multiple API calls to display information pertaining to a publically listed company. Stock price, stock history, metrics, and financial info; this app displays all of these and more in a simple, easy to use layout. Users may create account that keeps track of their favorited stocks.
 ## What did I use?
@@ -15,3 +17,4 @@ Build with MERN Stack (MongoDB, ExpressJS, React.js, Node.js) and Redux. Mongo w
 I was very unfamiliar with HTTP front-end API calls, so this project definitely made me comfortable with that. Financiall analysis is also a hobby of mine, and I really love to do it, so i figured why not combine two of my interests and code a little stock-lookup tool!
 ## Why on earth did I use two APIs?
 Because these APIs are very pricey, haha. I'm utilizing both APIs free-versions. I prefer Finnhub.io, as its docs are easier to navigate. But, they only allow be 30 API calls a minute :/.
+ 
