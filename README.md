@@ -1,7 +1,7 @@
 # A web app for financial analysis
 ### Featuring a Stock Information Page
 ![](images/features.gif)
-### User Account creation and Authentication
+### User Account Creation and Authentication
 ![](images/authentic-eater.gif)
 ### And a Favorites List tied to each User Account!
 ![](images/watchlist.gif)
