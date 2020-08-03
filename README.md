@@ -1,12 +1,10 @@
 # A web app for financial analysis
-### Home Page
-![](frontend/images/gal_1.png)
-### Autocomplete Search-Bar
-![](frontend/images/gal_2.png)
-### Stock Page(Top)
-![](frontend/images/gal_3.png)
-### Stock Page(Bottom)
-![](frontend/images/gal_4.png)
+### Featuring a Stock Information Page
+![](images/features.gif)
+### User Account creation and Authentication
+![](images/authentic-eater.gif)
+### And a Favorites List tied to each User Account!
+![](images/watchlist.gif)
 #### Built with:
 ![](https://gossett.dev/static/b52512d9402df77db7e9436af0bb44d0/b53ef/mern.png)
 ## What is it?
